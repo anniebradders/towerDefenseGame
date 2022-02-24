@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 import map from '../config/map';
-import Turret from '../objects/Turret';
-import AntiAir from '../objects/AntiAir';
-import Artillery from '../objects/Artillery';
-import FlameThrower from '../objects/FlameThrower';
+import Turret from '../objects/defense/Turret';
+import AntiAir from '../objects/defense/AntiAir';
+import Artillery from '../objects/defense/Artillery';
+import FlameThrower from '../objects/defense/FlameThrower';
 
 var option = 0;
 
@@ -34,6 +34,26 @@ export default class GameScene extends Phaser.Scene{
     
         this.input.on('pointerdown', this.placeTurret.bind(this));
     }
+
+    // createAttackerInventory(){
+    //     var attackArray;
+
+    //     var x = 50;
+
+    //     for(var i = 1; i < 7; i++){
+    //         let attack = this.add.image(x+=100,550,"attack" + i);
+
+    //         attack.index = i;
+
+    //         attack.setScale(2);
+
+    //         attack.setInteractive();
+
+    //         attackArray += attack.index;
+    //     }
+
+    //     this.input.on('gameobjectdown', this.InvenClick.bind(this));
+    // }
 
     createInventory(){
         var defenseArray;
