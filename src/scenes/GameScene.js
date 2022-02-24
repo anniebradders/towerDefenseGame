@@ -22,6 +22,7 @@ export default class GameScene extends Phaser.Scene{
     create(){
       this.createMap();
       this.createInventory();
+      this.createAttackerInventory();
       this.createCursor();
       this.createGroups();
     }
@@ -35,25 +36,25 @@ export default class GameScene extends Phaser.Scene{
         this.input.on('pointerdown', this.placeTurret.bind(this));
     }
 
-    // createAttackerInventory(){
-    //     var attackArray;
+    createAttackerInventory(){
+        var attackArray;
 
-    //     var x = 50;
+        var x = 50;
 
-    //     for(var i = 1; i < 7; i++){
-    //         let attack = this.add.image(x+=100,550,"attack" + i);
+        for(var i = 1; i < 7; i++){
+            let attack = this.add.image(x+=100,550,"attack" + i);
 
-    //         attack.index = i;
+            attack.index = i;
 
-    //         attack.setScale(2);
+            attack.setScale(2);
 
-    //         attack.setInteractive();
+            attack.setInteractive();
 
-    //         attackArray += attack.index;
-    //     }
+            attackArray += attack.index;
+        }
 
-    //     this.input.on('gameobjectdown', this.InvenClick.bind(this));
-    // }
+        this.input.on('gameobjectdown', this.InvenClick.bind(this));
+    }
 
     createInventory(){
         var defenseArray;
