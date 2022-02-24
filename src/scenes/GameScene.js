@@ -19,7 +19,7 @@ export default class GameScene extends Phaser.Scene{
         });
     } 
 
-    create(){
+    create(){      
       this.createMap();
       this.createInventory();
       this.createCursor();
@@ -85,11 +85,16 @@ export default class GameScene extends Phaser.Scene{
 
     createMap(){
         //create our map
-        this.bgMap = this.make.tilemap({key: 'level1'});
+        
+        const map = this.make.tilemap({key: 'tileSetGrass'})
+        const tileset = map.addTilesetImage('tileSetGrass', 'Grass')
+
+        map.createStaticLayer('Grass', tileset, 0, 0)
+        // this.bgMap = this.make.tilemap({level: '1'});
         //add tileset image
-        this.tiles = this.bgMap.addTilesetImage('terrainTiles_default');
+        // this.tiles = this.bgMap.addTilesetImage('terrainTiles_default');
         //create our background layer
-        this.backgroundLayer = this.bgMap.createStaticLayer('Background', this.tiles, 0, 0);
+        // this.backgroundLayer = this.bgMap.createStaticLayer('Background', this.tiles, 0, 0);
     }
 
     placeTurret(pointer){

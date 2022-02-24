@@ -11,6 +11,7 @@ export default class PreloaderScene extends Phaser.Scene{
 
     preload(){
         //time event for logo 
+
         this.timedEvent = this.time.delayedCall(1, this.ready, [], this)
         this.createPreloader();
         this.loadAssests();
@@ -112,8 +113,14 @@ export default class PreloaderScene extends Phaser.Scene{
         this.load.image('logo2', './assets/logo.png');
 
         //tile map in JSON format
-        this.load.tilemapTiledJSON('level1', './assets/level/level1.json');
-        this.load.spritesheet('terrainTiles_default', './assets/level/terrainTiles_default.png', { frameWidth: 64, frameHeight: 64});
+
+        this.load.image('Grass', './assets/level/Grass.png')
+        this.load.tilemapTiledJSON('tileSetGrass', './assets/level/tileSetGrass.json')
+        
+        // this.load.spritesheet('grassTiles', './assets/level/Grass.png', { frameWidth: 64, frameHeight: 64});
+        
+        // this.load.tilemapTiledJSON('level1', './assets/level/level1.json');
+        // this.load.spritesheet('terrainTiles_default', './assets/level/terrainTiles_default.png', { frameWidth: 64, frameHeight: 64});
 
         
     }
