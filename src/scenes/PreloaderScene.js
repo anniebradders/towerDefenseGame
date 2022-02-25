@@ -115,6 +115,7 @@ export default class PreloaderScene extends Phaser.Scene{
         this.load.image('attack6', './assets/attack/Tank.png');
 
         this.load.image('cursor', './assets/ui/cursor.png')
+        this.load.image('arrow', './assets/ui/arrow.png')
 
         //placeholder
         this.load.image('logo2', './assets/logo.png');
