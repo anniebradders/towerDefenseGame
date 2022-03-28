@@ -24,6 +24,7 @@ export default class GameScene extends Phaser.Scene{
         this.map = map.map(function (arr){
             return arr.slice();
         });
+        this.nextAttacker = 0;
     } 
 
     create(){
@@ -31,8 +32,21 @@ export default class GameScene extends Phaser.Scene{
       this.createInventory();
       this.createAttackerInventory();
       this.createCursor();
+      this.createPath();
       this.createArrow();
+      this.createRobotGroups(); 
       this.createGroups();
+    }
+
+    createRobotGroups(){
+        this.robots = this.physics.add.group({ classType: Robot, runChildUpdate: true });
+        this.aerial = this.physics.add.group({ classType: Aerial, runChildUpdate: true });
+        this.hacker = this.physics.add.group({ classType: Hacker, runChildUpdate: true });
+        this.redhat = this.physics.add.group({ classType: Redhat, runChildUpdate: true });
+        this.standard = this.physics.add.group({ classType: Standard, runChildUpdate: true });
+        this.tank = this.physics.add.group({ classType: Tank, runChildUpdate: true });
+
+        //this.input.on('pointerdown', this.placeRobot.bind(this));
     }
 
     createGroups(){
@@ -42,6 +56,25 @@ export default class GameScene extends Phaser.Scene{
         this.FlameThrower = this.add.group({ classType: FlameThrower, runChildUpdate: true });
     
         this.input.on('pointerdown', this.placeTurret.bind(this));
+    }
+
+
+    update(time, delta) {
+        if(time > this.nextAttacker) {
+            var attacker = this.robots.getFirstDead();
+            if(!attacker){
+                attacker = new Robot(this, 0, 0, this.path);
+                this.robots.add(attacker);
+            }
+            if(attacker){
+                attacker.setActive(true);
+                attacker.setVisible(true);
+
+                attacker.startOnPath();
+
+                this.nextAttacker = time + 2000;
+            }
+        }
     }
 
     createAttackerInventory(){
@@ -87,11 +120,16 @@ export default class GameScene extends Phaser.Scene{
 
     InvenClick(pointer, defense){
         option = defense.index-1;
+
+        var attacker = this.robots.getFirstDead();
+
+        attacker = new Robot(this, 0, 0, this.path);
+        console.log(attacker)
     }
 
-    InvenSwap(){
+    // InvenSwap(){
 
-    }
+    // }
 
     createCursor(){
         this.cursor = this.add.image(32, 32, 'cursor');
@@ -122,6 +160,20 @@ export default class GameScene extends Phaser.Scene{
         }
     }
 
+    createPath(){
+        this.graphics = this.add.graphics();
+        //the path the enemies follow
+        this.path = this.add.path(96, -32);
+        this.path.lineTo(96, 164);
+        this.path.lineTo(480, 164);
+        this.path.lineTo(480, 544);
+
+        //visualises the path
+        this.graphics.lineStyle(3, 0xffffff, 1);
+        this.path.draw(this.graphics);
+
+    }
+
     createMap(){
         //create our map
         this.bgMap = this.make.tilemap({key: 'level1'});
@@ -130,6 +182,24 @@ export default class GameScene extends Phaser.Scene{
         //create our background layer
         this.backgroundLayer = this.bgMap.createStaticLayer('Background', this.tiles, 0, 0);
     }
+
+    // placeRobot(){
+        
+    //     var attacker = this.robots.getFirstDead();
+    
+    //     if (!attacker) {
+    //         attacker = new Robot(this, 0, 0, this.path);
+    //         this.attacker.add(attacker);
+    //     }
+
+    //     if (attacker) {
+    //         attacker.setActive(true);
+    //         attacker.setVisible(true);
+
+    //         attacker.startOnPath();
+    //     }
+        
+    // }
 
     placeTurret(pointer){
         var i = Math.floor(pointer.y /64);
