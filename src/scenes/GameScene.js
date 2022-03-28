@@ -11,6 +11,7 @@ import Redhat from '../objects/attack/Redhat';
 import Standard from '../objects/attack/Standard';
 import Tank from '../objects/attack/Tank';
 import Bullet from '../objects/misc/Bullet';
+import levelConfig from '../config/levelConfig';
 
 
 var option = 0;
@@ -232,7 +233,7 @@ export default class GameScene extends Phaser.Scene{
             bullet.setVisible(false);
 
             //decrease hp
-            attacker.recieveDamage(50);
+            attacker.recieveDamage(levelConfig.default.damage);
         }
     }
 

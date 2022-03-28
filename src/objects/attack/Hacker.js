@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import levelConfig from '../../config/levelConfig';
 
 export default class Robot extends Phaser.GameObjects.Image{
     constructor(scene, x, y, path){
@@ -13,6 +14,7 @@ export default class Robot extends Phaser.GameObjects.Image{
 
         //add enemy to scene
         this.scene.add.existing(this);
+        this.setScale(1.2);
     }
     update(time, delta) {
         this.follower.t += this.enemySpeed * delta;
@@ -33,10 +35,13 @@ export default class Robot extends Phaser.GameObjects.Image{
 }    }
     
     startOnPath() {
+        //TODO 
+        //Adding user stats such as a userConfig file or something 
+        
         //set health
-        this.hp = 100;
+        this.hp = levelConfig.default.health;
         //set speed
-        this.enemySpeed = 1/10000;;
+        this.enemySpeed = levelConfig.default.speed;
 
 
         //set the t parameter at the start of the path
