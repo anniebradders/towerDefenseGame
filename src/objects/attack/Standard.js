@@ -36,7 +36,7 @@ export default class Robot extends Phaser.GameObjects.Image{
         //set health
         this.hp = 100;
         //set speed
-        this.enemySpeed = 100;
+        this.enemySpeed = 1/10000;;
 
 
         //set teh t parameter at the start of the path

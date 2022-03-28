@@ -10,9 +10,11 @@ import Hacker from '../objects/attack/Hacker';
 import Redhat from '../objects/attack/Redhat';
 import Standard from '../objects/attack/Standard';
 import Tank from '../objects/attack/Tank';
+import Bullet from '../objects/misc/Bullet';
 
 
 var option = 0;
+var attackerOption = 0; 
 
 export default class GameScene extends Phaser.Scene{
     constructor(){
@@ -34,11 +36,22 @@ export default class GameScene extends Phaser.Scene{
       this.createCursor();
       this.createPath();
       this.createArrow();
-      this.createRobotGroups(); 
       this.createGroups();
     }
 
-    createRobotGroups(){
+    // createRobotGroups(){
+    //     this.robots = this.physics.add.group({ classType: Robot, runChildUpdate: true });
+    //     this.aerial = this.physics.add.group({ classType: Aerial, runChildUpdate: true });
+    //     this.hacker = this.physics.add.group({ classType: Hacker, runChildUpdate: true });
+    //     this.redhat = this.physics.add.group({ classType: Redhat, runChildUpdate: true });
+    //     this.standard = this.physics.add.group({ classType: Standard, runChildUpdate: true });
+    //     this.tank = this.physics.add.group({ classType: Tank, runChildUpdate: true });
+
+    //     //this.input.on('pointerdown', this.placeRobot.bind(this));
+    // }
+
+    createGroups(){
+
         this.robots = this.physics.add.group({ classType: Robot, runChildUpdate: true });
         this.aerial = this.physics.add.group({ classType: Aerial, runChildUpdate: true });
         this.hacker = this.physics.add.group({ classType: Hacker, runChildUpdate: true });
@@ -46,15 +59,13 @@ export default class GameScene extends Phaser.Scene{
         this.standard = this.physics.add.group({ classType: Standard, runChildUpdate: true });
         this.tank = this.physics.add.group({ classType: Tank, runChildUpdate: true });
 
-        //this.input.on('pointerdown', this.placeRobot.bind(this));
-    }
-
-    createGroups(){
         this.turrets = this.add.group({ classType: Turret, runChildUpdate: true });
         this.AntiAir = this.add.group({ classType: AntiAir, runChildUpdate: true });    
         this.Artillery = this.add.group({ classType: Artillery, runChildUpdate: true });
         this.FlameThrower = this.add.group({ classType: FlameThrower, runChildUpdate: true });
+        this.bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     
+        this.physics.add.overlap(this.robots, this.bullets, this.damageUnit.bind(this));
         this.input.on('pointerdown', this.placeTurret.bind(this));
     }
 
@@ -63,7 +74,20 @@ export default class GameScene extends Phaser.Scene{
         if(time > this.nextAttacker) {
             var attacker = this.robots.getFirstDead();
             if(!attacker){
-                attacker = new Robot(this, 0, 0, this.path);
+                if(attackerOption === 0){
+                    attacker = new Robot(this, 0, 0, this.path);
+                }else if(attackerOption === 1){
+                    attacker = new Aerial(this, 0, 0, this.path);
+                }else if(attackerOption === 2){
+                    attacker = new Hacker(this, 0, 0, this.path);
+                }else if(attackerOption == 3){
+                    attacker = new Redhat(this, 0, 0, this.path);
+                }else if(attackerOption == 4){
+                    attacker = new Standard(this, 0, 0, this.path);
+                }else if(attackerOption == 5){
+                    attacker = new Tank(this, 0, 0, this.path);
+                }
+                
                 this.robots.add(attacker);
             }
             if(attacker){
@@ -183,23 +207,34 @@ export default class GameScene extends Phaser.Scene{
         this.backgroundLayer = this.bgMap.createStaticLayer('Background', this.tiles, 0, 0);
     }
 
-    // placeRobot(){
-        
-    //     var attacker = this.robots.getFirstDead();
-    
-    //     if (!attacker) {
-    //         attacker = new Robot(this, 0, 0, this.path);
-    //         this.attacker.add(attacker);
-    //     }
+    getAttacker(x, y, distance) {
+        var attackUnits = this.robots.getChildren();
+        for (var i = 0; i < attackUnits.length; i++){
+            if (attackUnits[i].active && Phaser.Math.Distance.Between(x, y, attackUnits[i].x, attackUnits[i].y) <= distance){
+                return attackUnits[i];
+            }
+        }
+        return false;
+    }
 
-    //     if (attacker) {
-    //         attacker.setActive(true);
-    //         attacker.setVisible(true);
+    addBullet(x, y, angle){
+        var bullet = this.bullets.getFirstDead();
+        if (!bullet) {
+            bullet = new Bullet(this, 0, 0);
+            this.bullets.add(bullet);
+        }
+        bullet.fire(x, y, angle);
+    }
 
-    //         attacker.startOnPath();
-    //     }
-        
-    // }
+    damageUnit(attacker, bullet){
+        if (attacker.active === true && bullet.active === true) {
+            bullet.setActive(false);
+            bullet.setVisible(false);
+
+            //decrease hp
+            attacker.recieveDamage(50);
+        }
+    }
 
     placeTurret(pointer){
         var i = Math.floor(pointer.y /64);
