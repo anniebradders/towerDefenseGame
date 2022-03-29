@@ -9,6 +9,7 @@ export default class Robot extends Phaser.GameObjects.Image{
         this.path = path; 
         this.hp = 0;
         this.enemySpeed = 0;
+        this.flying = true;
         this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
 
 
@@ -39,7 +40,7 @@ export default class Robot extends Phaser.GameObjects.Image{
         //Adding user stats such as a userConfig file or something 
         
         //set health
-        this.hp = levelConfig.default.health;
+        this.hp = levelConfig.default.health ;
         //set speed
         this.enemySpeed = levelConfig.default.speed;
 

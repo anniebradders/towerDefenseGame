@@ -16,6 +16,7 @@ import levelConfig from '../config/levelConfig';
 
 var option = 0;
 var attackerOption = 0; 
+var rand = 0;
 
 export default class GameScene extends Phaser.Scene{
     constructor(){
@@ -40,17 +41,6 @@ export default class GameScene extends Phaser.Scene{
       this.createGroups();
     }
 
-    // createRobotGroups(){
-    //     this.robots = this.physics.add.group({ classType: Robot, runChildUpdate: true });
-    //     this.aerial = this.physics.add.group({ classType: Aerial, runChildUpdate: true });
-    //     this.hacker = this.physics.add.group({ classType: Hacker, runChildUpdate: true });
-    //     this.redhat = this.physics.add.group({ classType: Redhat, runChildUpdate: true });
-    //     this.standard = this.physics.add.group({ classType: Standard, runChildUpdate: true });
-    //     this.tank = this.physics.add.group({ classType: Tank, runChildUpdate: true });
-
-    //     //this.input.on('pointerdown', this.placeRobot.bind(this));
-    // }
-
     createGroups(){
 
         this.robots = this.physics.add.group({ classType: Robot, runChildUpdate: true });
@@ -74,31 +64,74 @@ export default class GameScene extends Phaser.Scene{
     update(time, delta) {
         if(time > this.nextAttacker) {
             var attacker = this.robots.getFirstDead();
-            if(!attacker){
+            rand = Phaser.Math.Between(0, 3);
+            attackerOption = Phaser.Math.Between(0, 3);
                 if(attackerOption === 0){
-                    attacker = new Robot(this, 0, 0, this.path);
+                    if (rand === 0){
+                        attacker = new Robot(this, 0, 0, this.path);
+                    }else if(rand === 1){
+                        attacker = new Robot(this, 0, 0, this.path2);
+                    }else if(rand === 2){
+                        attacker = new Robot(this, 0, 0, this.path3);
+                    }else if(rand === 3){
+                        attacker = new Robot(this, 0, 0, this.path4);
+                    }
+                    
                 }else if(attackerOption === 1){
-                    attacker = new Aerial(this, 0, 0, this.path);
+                    if (rand === 0){
+                        attacker = new Aerial(this, 0, 0, this.path);
+                    }else if(rand === 1){
+                        attacker = new Aerial(this, 0, 0, this.path2);
+                    }else if(rand === 2){
+                        attacker = new Aerial(this, 0, 0, this.path3);
+                    }else if(rand === 3){
+                        attacker = new Aerial(this, 0, 0, this.path4);
+                    }
                 }else if(attackerOption === 2){
-                    attacker = new Hacker(this, 0, 0, this.path);
+                    if (rand === 0){
+                        attacker = new Hacker(this, 0, 0, this.path);
+                    }else if(rand === 1){
+                        attacker = new Hacker(this, 0, 0, this.path2);
+                    }else if(rand === 2){
+                        attacker = new Hacker(this, 0, 0, this.path3);
+                    }else if(rand === 3){
+                        attacker = new Hacker(this, 0, 0, this.path4);
+                    }
                 }else if(attackerOption == 3){
-                    attacker = new Redhat(this, 0, 0, this.path);
+                    if (rand === 0){
+                        attacker = new Standard(this, 0, 0, this.path);
+                    }else if(rand === 1){
+                        attacker = new Standard(this, 0, 0, this.path2);
+                    }else if(rand === 2){
+                        attacker = new Standard(this, 0, 0, this.path3);
+                    }else if(rand === 3){
+                        attacker = new Standard(this, 0, 0, this.path4);
+                    }
                 }else if(attackerOption == 4){
-                    attacker = new Standard(this, 0, 0, this.path);
+                    if (rand === 0){
+                        attacker = new Tank(this, 0, 0, this.path);
+                    }else if(rand === 1){
+                        attacker = new Tank(this, 0, 0, this.path2);
+                    }else if(rand === 2){
+                        attacker = new Tank(this, 0, 0, this.path3);
+                    }else if(rand === 3){
+                        attacker = new Tank(this, 0, 0, this.path4);
+                    }
                 }else if(attackerOption == 5){
-                    attacker = new Tank(this, 0, 0, this.path);
+                    if (rand === 0){
+                        attacker = new Redhat(this, 0, 0, this.path);
+                    }else if(rand === 1){
+                        attacker = new Redhat(this, 0, 0, this.path2);
+                    }else if(rand === 2){
+                        attacker = new Redhat(this, 0, 0, this.path3);
+                    }else if(rand === 3){
+                        attacker = new Redhat(this, 0, 0, this.path4);
+                    }
                 }
                 
                 this.robots.add(attacker);
-            }
-            if(attacker){
-                attacker.setActive(true);
-                attacker.setVisible(true);
-
                 attacker.startOnPath();
-
-                this.nextAttacker = time + 2000;
-            }
+                this.nextAttacker = time + 200;
         }
     }
 
@@ -188,15 +221,27 @@ export default class GameScene extends Phaser.Scene{
     createPath(){
         this.graphics = this.add.graphics();
         //the path the enemies follow
-        this.path = this.add.path(96, -32);
-        this.path.lineTo(96, 164);
-        this.path.lineTo(480, 164);
-        this.path.lineTo(480, 544);
-
+        this.path = this.add.path(700, 32);
+        this.path.lineTo(32, 32);
+        
         //visualises the path
         this.graphics.lineStyle(3, 0xffffff, 1);
         this.path.draw(this.graphics);
 
+        this.path2 = this.add.path(700, 96);
+        this.path2.lineTo(32, 96);
+
+        this.path2.draw(this.graphics);
+        
+        this.path3 = this.add.path(700, 160);
+        this.path3.lineTo(32, 160);
+
+        this.path3.draw(this.graphics);
+        
+        this.path4 = this.add.path(700, 224);
+        this.path4.lineTo(32, 224);
+
+        this.path4.draw(this.graphics);
     }
 
     createMap(){
@@ -210,6 +255,7 @@ export default class GameScene extends Phaser.Scene{
 
     getAttacker(x, y, distance) {
         var attackUnits = this.robots.getChildren();
+        var attackInRange = [];
         for (var i = 0; i < attackUnits.length; i++){
             if (attackUnits[i].active && Phaser.Math.Distance.Between(x, y, attackUnits[i].x, attackUnits[i].y) <= distance){
                 return attackUnits[i];
@@ -228,12 +274,12 @@ export default class GameScene extends Phaser.Scene{
     }
 
     damageUnit(attacker, bullet){
-        if (attacker.active === true && bullet.active === true) {
+        if (attacker.active === true && bullet.active === true ) {
             bullet.setActive(false);
             bullet.setVisible(false);
 
             //decrease hp
-            attacker.recieveDamage(levelConfig.default.damage);
+            attacker.recieveDamage(levelConfig.default.damage); //bullet.damage
         }
     }
 

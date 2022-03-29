@@ -34,5 +34,6 @@ export default class Turret extends Phaser.GameObjects.Image{
             this.scene.addBullet(this.x, this.y, angle);
             this.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG;
         }
+        
     }
 }
