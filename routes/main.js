@@ -1,17 +1,23 @@
 const passport = require('passport');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const UserModel = require('../models/userModel');
 const tokenList = {};
 const router = express.Router();
+<<<<<<< HEAD
 const userModel = require('../models/userModel');
 const mongoose = require('mongoose')
+=======
+>>>>>>> ced520976370de7391a68af6593bf9003da621a3
 
 router.get('/status', (req, res, next) => {
   res.status(200).json({ status: 'ok' });
 });
+
 router.post('/signup', passport.authenticate('signup', { session: false }), async (req, res, next) => {
   res.status(200).json({ message: 'signup successful' });
 });
+
 router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
@@ -28,8 +34,12 @@ router.post('/login', async (req, res, next) => {
         const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
         const refreshToken = jwt.sign({ user: body }, 'top_secret_refresh', { expiresIn: 86400 });
         // store tokens in cookie
+<<<<<<< HEAD
         res.cookie('email', body.email)
         console.log(user.email)
+=======
+        res.cookie('email', body.email);
+>>>>>>> ced520976370de7391a68af6593bf9003da621a3
         res.cookie('jwt', token);
         res.cookie('refreshJwt', refreshToken);
         // store tokens in memory
@@ -47,21 +57,34 @@ router.post('/login', async (req, res, next) => {
     }
   })(req, res, next);
 });
+
+/*router.get('/userdetails', (req, res) => {
+  const { email } = req.body;
+
+  const userdetails = {email};
+
+  res.status(200).json({userdetails});
+
+});*/
+
+
 router.post('/token', (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   const { email, refreshToken } = req.body;
   //console.log(tokenList);
   if ((refreshToken in tokenList) && (tokenList[refreshToken].email === email)) {
     const body = { email, _id: tokenList[refreshToken]._id };
     const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
     // update jwt
+    res.cookie('email', body.email);
     res.cookie('jwt', token);
     tokenList[refreshToken].token = token;
-    res.status(200).json({ token });
+    res.status(200).json({ token, body });
   } else {
     res.status(401).json({ message: 'Unauthorized' });
   }
 });
+
 router.post('/logout', (req, res) => {
   if (req.cookies) {
     const refreshToken = req.cookies['refreshJwt'];

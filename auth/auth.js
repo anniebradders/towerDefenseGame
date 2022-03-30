@@ -2,6 +2,7 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const JWTstrategy = require('passport-jwt').Strategy;
 const UserModel = require('../models/userModel');
+const GameModel = require('../models/gameModel');
 
 // handle user registration
 passport.use('signup', new localStrategy({
@@ -12,6 +13,7 @@ passport.use('signup', new localStrategy({
   try {
     const { name } = req.body;
     const user = await UserModel.create({ email, password, name});
+    const game = await GameModel.create({ email})
     return done(null, user);
   } catch (error) {
     done(error);
