@@ -42,8 +42,10 @@ function httpGet(theUrl)
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
+    gs = httpGet("/getGame");
     ts = httpGet("/GETGET");
 console.log(ts)
+console.log(gs)
 var yahooOnly = JSON.parse(ts).filter(function (entry) {
     return entry.email === em;
 });

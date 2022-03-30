@@ -4,11 +4,9 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const tokenList = {};
 const router = express.Router();
-<<<<<<< HEAD
 const userModel = require('../models/userModel');
+const gameModel = require('../models/gameModel')
 const mongoose = require('mongoose')
-=======
->>>>>>> ced520976370de7391a68af6593bf9003da621a3
 
 router.get('/status', (req, res, next) => {
   res.status(200).json({ status: 'ok' });
@@ -18,6 +16,15 @@ router.post('/signup', passport.authenticate('signup', { session: false }), asyn
   res.status(200).json({ message: 'signup successful' });
 });
 
+router.post('/signup', function (req, res, next) {
+  var posts = new gameModel({
+    email : req.data.email
+  })
+  posts.save(function (err, post) {
+    if (err) { return next(err) }
+    res.json(201, post)
+  })
+})
 router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
@@ -34,12 +41,8 @@ router.post('/login', async (req, res, next) => {
         const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
         const refreshToken = jwt.sign({ user: body }, 'top_secret_refresh', { expiresIn: 86400 });
         // store tokens in cookie
-<<<<<<< HEAD
         res.cookie('email', body.email)
         console.log(user.email)
-=======
-        res.cookie('email', body.email);
->>>>>>> ced520976370de7391a68af6593bf9003da621a3
         res.cookie('jwt', token);
         res.cookie('refreshJwt', refreshToken);
         // store tokens in memory
@@ -97,6 +100,17 @@ router.post('/logout', (req, res) => {
 module.exports = router;
 router.route("/GETGET").get(function(req, res) {
   userModel.find({}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+module.exports = router;
+
+router.route("/getGame").get(function(req, res) {
+  gameModel.find({}, function(err, result) {
     if (err) {
       res.send(err);
     } else {
