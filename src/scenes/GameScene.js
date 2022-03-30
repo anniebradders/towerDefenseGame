@@ -66,7 +66,8 @@ export default class GameScene extends Phaser.Scene{
             var attacker = this.robots.getFirstDead();
             rand = Phaser.Math.Between(0, 3);
             attackerOption = Phaser.Math.Between(0, 3);
-                if(attackerOption === 0){
+                if(attackerOption === 0 && levelConfig.default.count > 0){
+                    levelConfig.default.count -= 1
                     if (rand === 0){
                         attacker = new Robot(this, 0, 0, this.path);
                     }else if(rand === 1){
@@ -182,7 +183,6 @@ export default class GameScene extends Phaser.Scene{
         var attacker = this.robots.getFirstDead();
 
         attacker = new Robot(this, 0, 0, this.path);
-        console.log(attacker)
     }
 
     // InvenSwap(){
@@ -254,14 +254,16 @@ export default class GameScene extends Phaser.Scene{
     }
 
     getAttacker(x, y, distance) {
+        //gets all attacking units
         var attackUnits = this.robots.getChildren();
-        var attackInRange = [];
+        var attackersInRange = [];
         for (var i = 0; i < attackUnits.length; i++){
             if (attackUnits[i].active && Phaser.Math.Distance.Between(x, y, attackUnits[i].x, attackUnits[i].y) <= distance){
-                return attackUnits[i];
+                //adds to the attackers in range
+                attackersInRange.push(attackUnits[i]);
             }
         }
-        return false;
+        return attackersInRange;
     }
 
     addBullet(x, y, angle){
@@ -269,17 +271,42 @@ export default class GameScene extends Phaser.Scene{
         if (!bullet) {
             bullet = new Bullet(this, 0, 0);
             this.bullets.add(bullet);
+
+            //gets all turrets
+            var Turret = this.turrets.getChildren();
+            for(var i = 0; i < Turret.length; i++){
+                if (Turret[i].getTurret(x, y) !== "no_result"){
+                    //assigns targetting from the turret it was fired from
+                    var targetting = Turret[i].getTurret(x, y)
+                    break;
+                }
+            }
+            //updates bullet class by putting a value of which turret it was fired from
+            bullet.firedFrom = targetting;
         }
+    
         bullet.fire(x, y, angle);
+    
     }
 
     damageUnit(attacker, bullet){
-        if (attacker.active === true && bullet.active === true ) {
-            bullet.setActive(false);
-            bullet.setVisible(false);
+        if (attacker.active === true && bullet.active === true) {
+            //attacker flying and the turret can hit flying units
+            if (attacker.flying === true && (bullet.firedFrom === 2  || bullet.firedFrom === 0) ){
 
-            //decrease hp
-            attacker.recieveDamage(levelConfig.default.damage); //bullet.damage
+                bullet.setActive(false);
+                bullet.setVisible(false);
+                //decrease hp
+                attacker.recieveDamage(levelConfig.default.damage);
+                
+            }
+            if (attacker.flying === false && bullet.firedFrom !== 2){
+                bullet.setActive(false);
+                bullet.setVisible(false);
+                //decrease hp
+                attacker.recieveDamage(levelConfig.default.damage);
+            }
+            console.log(bullet.firedFrom);
         }
     }
 
