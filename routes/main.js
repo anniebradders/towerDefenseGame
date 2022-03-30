@@ -43,7 +43,9 @@ router.post('/login', async (req, res, next) => {
   })(req, res, next);
 });
 router.post('/token', (req, res) => {
+  console.log(req.body);
   const { email, refreshToken } = req.body;
+  //console.log(tokenList);
   if ((refreshToken in tokenList) && (tokenList[refreshToken].email === email)) {
     const body = { email, _id: tokenList[refreshToken]._id };
     const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
