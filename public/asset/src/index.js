@@ -1,9 +1,9 @@
-import Phaser from 'phaser';
-import config from './config/config'
+
+import config from './config/config.js'
 import GameScene from './scenes/GameScene.js';
-import BootScene from './scenes/BootScene';
-import PreloaderScene from './scenes/PreloaderScene';
-import UIScene from './scenes/UIScene';
+import BootScene from './scenes/BootScene.js';
+import PreloaderScene from './scenes/PreloaderScene.js';
+import UIScene from './scenes/UIScene.js';
 
 class Game extends Phaser.Game
 {

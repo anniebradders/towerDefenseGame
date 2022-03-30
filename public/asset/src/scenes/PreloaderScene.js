@@ -1,4 +1,3 @@
-import Phaser from 'phaser';
 
 export default class PreloaderScene extends Phaser.Scene{
     constructor(){
@@ -97,23 +96,23 @@ export default class PreloaderScene extends Phaser.Scene{
     loadAssests(){
         //load assets needed in our game
         //this.load.image('background', './assets/level/Background.png');
-        this.load.image('AntiAirFire1', './assets/level/AntiAirFire1.png');
-        this.load.image('defense1', './assets/defense/AntiAir.png');
-        this.load.image('AntiAirFire2', './assets/level/AntiAirFire2.png');
-        this.load.image('AntiAirFire3', './assets/level/AntiAirFire3.png');
-        this.load.image('defense2', './assets/defense/Artillery.png');
-        this.load.image('defense3', './assets/defense/MachineGun.png');
-        this.load.image('MachineGunFire1', './assets/level/MachineGunFire1.png');
-        this.load.image('MachineGunFire2', './assets/level/MachineGunFire2.png');
-        this.load.image('defense4', './assets/defense/FlameThrower.png' )
-        this.load.image('cursor', './assets/ui/cursor.png')
+        this.load.image('AntiAirFire1', '../assets/level/AntiAirFire1.png');
+        this.load.image('defense1', '../assets/defense/AntiAir.png');
+        this.load.image('AntiAirFire2', '../assets/level/AntiAirFire2.png');
+        this.load.image('AntiAirFire3', '../assets/level/AntiAirFire3.png');
+        this.load.image('defense2', '../assets/defense/Artillery.png');
+        this.load.image('defense3', '../assets/defense/MachineGun.png');
+        this.load.image('MachineGunFire1', '../assets/level/MachineGunFire1.png');
+        this.load.image('MachineGunFire2', '../assets/level/MachineGunFire2.png');
+        this.load.image('defense4', '../assets/defense/FlameThrower.png' )
+        this.load.image('cursor', '../assets/ui/cursor.png')
 
         //placeholder
-        this.load.image('logo2', './assets/logo.png');
+        this.load.image('logo2', '../assets/logo.png');
 
         //tile map in JSON format
-        this.load.tilemapTiledJSON('level1', './assets/level/level1.json');
-        this.load.spritesheet('terrainTiles_default', './assets/level/terrainTiles_default.png', { frameWidth: 64, frameHeight: 64});
+        this.load.tilemapTiledJSON('level1', '../assets/level/level1.json');
+        this.load.spritesheet('terrainTiles_default', '../assets/level/terrainTiles_default.png', { frameWidth: 64, frameHeight: 64});
 
         
     }

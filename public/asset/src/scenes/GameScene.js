@@ -1,9 +1,9 @@
-import Phaser from 'phaser';
-import map from '../config/map';
-import Turret from '../objects/Turret';
-import AntiAir from '../objects/AntiAir';
-import Artillery from '../objects/Artillery';
-import FlameThrower from '../objects/FlameThrower';
+
+import map from '../config/map.js';
+import Turret from '../objects/Turret.js';
+import AntiAir from '../objects/AntiAir.js';
+import Artillery from '../objects/Artillery.js';
+import FlameThrower from '../objects/FlameThrower.js';
 
 var option = 0;
 
@@ -14,6 +14,7 @@ export default class GameScene extends Phaser.Scene{
 
 
     init(){
+
         this.map = map.map(function (arr){
             return arr.slice();
         });
