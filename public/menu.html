@@ -3,8 +3,54 @@
   <head>
     <meta charset="utf-8">
     <title>Menu</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src="asset/js/refreshToken.js"></script>
+    <script src="asset/js/displayname.js"></script>
   </head>
+  
   <body>
     <h1>MENU</h1>
-  </body>
-</html>
+    <h2 id="demo"> Welcome to the game  : </h2>
+    <h2 id="do">afds</h2>
+    <script>
+      window.onload = function() {
+    menu();
+    function menu() {
+    em = getCookie('email')
+      function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    
+   
+}
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+    ts = httpGet("/GETGET");
+console.log(ts)
+var yahooOnly = JSON.parse(ts).filter(function (entry) {
+    return entry.email === em;
+});
+yahooOnly[0].password = "";
+document.getElementById("demo").insertAdjacentHTML("beforeend",(yahooOnly[0].name
+));
+}}
+
+      </script>
+ </body>

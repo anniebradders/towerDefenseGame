@@ -18,7 +18,7 @@ function getCookie(cname) {
       type: 'POST',
       url: '/token',
       data: {
-        email: "annie@gmail.com",
+        email: getCookie('email'),
         refreshToken: getCookie('refreshJwt')
       },
       success: function(data) {},
@@ -27,4 +27,4 @@ function getCookie(cname) {
         window.location.replace('/index.html');
       }
     });
-  }, 1000);
+  }, 10000);

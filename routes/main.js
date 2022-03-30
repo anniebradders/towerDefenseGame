@@ -3,6 +3,9 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const tokenList = {};
 const router = express.Router();
+const userModel = require('../models/userModel');
+const mongoose = require('mongoose')
+
 router.get('/status', (req, res, next) => {
   res.status(200).json({ status: 'ok' });
 });
@@ -25,6 +28,8 @@ router.post('/login', async (req, res, next) => {
         const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
         const refreshToken = jwt.sign({ user: body }, 'top_secret_refresh', { expiresIn: 86400 });
         // store tokens in cookie
+        res.cookie('email', body.email)
+        console.log(user.email)
         res.cookie('jwt', token);
         res.cookie('refreshJwt', refreshToken);
         // store tokens in memory
@@ -65,5 +70,15 @@ router.post('/logout', (req, res) => {
     res.clearCookie('jwt');
   }
   res.status(200).json({ message: 'logged out' });
+});
+module.exports = router;
+router.route("/GETGET").get(function(req, res) {
+  userModel.find({}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
 });
 module.exports = router;
