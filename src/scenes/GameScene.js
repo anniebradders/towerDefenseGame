@@ -29,6 +29,8 @@ export default class GameScene extends Phaser.Scene{
             return arr.slice();
         });
         this.nextAttacker = 0;
+        levelConfig.total.attackCount = levelConfig.robot.count + levelConfig.aerial.count + levelConfig.hacker.count + levelConfig.standard.count + levelConfig.tank.count + levelConfig.redhat.count;
+        console.log(levelConfig.total.attackCount);
     } 
 
     create(){
@@ -63,76 +65,97 @@ export default class GameScene extends Phaser.Scene{
 
     update(time, delta) {
         if(time > this.nextAttacker) {
+            if (levelConfig.total.attackCount == 0){
+                
+            }
+            else{
+
             var attacker = this.robots.getFirstDead();
             rand = Phaser.Math.Between(0, 3);
-            attackerOption = Phaser.Math.Between(0, 3);
-                if(attackerOption === 0 && levelConfig.default.count > 0){
-                    levelConfig.default.count -= 1
-                    if (rand === 0){
-                        attacker = new Robot(this, 0, 0, this.path);
-                    }else if(rand === 1){
-                        attacker = new Robot(this, 0, 0, this.path2);
-                    }else if(rand === 2){
-                        attacker = new Robot(this, 0, 0, this.path3);
-                    }else if(rand === 3){
-                        attacker = new Robot(this, 0, 0, this.path4);
-                    }
-                    
-                }else if(attackerOption === 1){
-                    if (rand === 0){
-                        attacker = new Aerial(this, 0, 0, this.path);
-                    }else if(rand === 1){
-                        attacker = new Aerial(this, 0, 0, this.path2);
-                    }else if(rand === 2){
-                        attacker = new Aerial(this, 0, 0, this.path3);
-                    }else if(rand === 3){
-                        attacker = new Aerial(this, 0, 0, this.path4);
-                    }
-                }else if(attackerOption === 2){
-                    if (rand === 0){
-                        attacker = new Hacker(this, 0, 0, this.path);
-                    }else if(rand === 1){
-                        attacker = new Hacker(this, 0, 0, this.path2);
-                    }else if(rand === 2){
-                        attacker = new Hacker(this, 0, 0, this.path3);
-                    }else if(rand === 3){
-                        attacker = new Hacker(this, 0, 0, this.path4);
-                    }
-                }else if(attackerOption == 3){
-                    if (rand === 0){
-                        attacker = new Standard(this, 0, 0, this.path);
-                    }else if(rand === 1){
-                        attacker = new Standard(this, 0, 0, this.path2);
-                    }else if(rand === 2){
-                        attacker = new Standard(this, 0, 0, this.path3);
-                    }else if(rand === 3){
-                        attacker = new Standard(this, 0, 0, this.path4);
-                    }
-                }else if(attackerOption == 4){
-                    if (rand === 0){
-                        attacker = new Tank(this, 0, 0, this.path);
-                    }else if(rand === 1){
-                        attacker = new Tank(this, 0, 0, this.path2);
-                    }else if(rand === 2){
-                        attacker = new Tank(this, 0, 0, this.path3);
-                    }else if(rand === 3){
-                        attacker = new Tank(this, 0, 0, this.path4);
-                    }
-                }else if(attackerOption == 5){
-                    if (rand === 0){
-                        attacker = new Redhat(this, 0, 0, this.path);
-                    }else if(rand === 1){
-                        attacker = new Redhat(this, 0, 0, this.path2);
-                    }else if(rand === 2){
-                        attacker = new Redhat(this, 0, 0, this.path3);
-                    }else if(rand === 3){
-                        attacker = new Redhat(this, 0, 0, this.path4);
-                    }
+
+            console.log(levelConfig.total.attackCount)
+
+            attackerOption = Phaser.Math.Between(0, levelConfig.total.attackCount);
+
+            if((attackerOption < levelConfig.robot.count && attackerOption >= 1) && levelConfig.robot.count > 0){
+                levelConfig.robot.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Robot(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Robot(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Robot(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Robot(this, 0, 0, this.path4);
                 }
+                
+            }else if((attackerOption < (levelConfig.aerial.count + levelConfig.robot.count)  && attackerOption >= levelConfig.robot.count) && levelConfig.aerial.count > 0){
+                levelConfig.aerial.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Aerial(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Aerial(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Aerial(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Aerial(this, 0, 0, this.path4);
+                }
+            }else if((attackerOption < (levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && attackerOption >= levelConfig.aerial.count) && levelConfig.hacker.count > 0){
+                levelConfig.hacker.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Hacker(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Hacker(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Hacker(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Hacker(this, 0, 0, this.path4);
+                }
+            }else if((attackerOption < (levelConfig.standard.count + levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && attackerOption >= levelConfig.aerial.count) && levelConfig.standard.count > 0){
+                levelConfig.standard.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Standard(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Standard(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Standard(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Standard(this, 0, 0, this.path4);
+                }
+            }else if((attackerOption < (levelConfig.tank.count + levelConfig.standard.count + levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && attackerOption >= levelConfig.aerial.count) && levelConfig.tank.count > 0){
+                levelConfig.tank.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Tank(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Tank(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Tank(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Tank(this, 0, 0, this.path4);
+                }
+            }else if(attackerOption < (levelConfig.redhat.count + levelConfig.tank.count + levelConfig.standard.count + levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && levelConfig.redhat.count > 0){
+                levelConfig.redhat.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Redhat(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Redhat(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Redhat(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Redhat(this, 0, 0, this.path4);
+                }
+            }
                 
                 this.robots.add(attacker);
                 attacker.startOnPath();
                 this.nextAttacker = time + 200;
+            }   
         }
     }
 
@@ -272,20 +295,21 @@ export default class GameScene extends Phaser.Scene{
             bullet = new Bullet(this, 0, 0);
             this.bullets.add(bullet);
 
-            //gets all turrets
-            var Turret = this.turrets.getChildren();
-            for(var i = 0; i < Turret.length; i++){
-                if (Turret[i].getTurret(x, y) !== "no_result"){
-                    //assigns targetting from the turret it was fired from
-                    var targetting = Turret[i].getTurret(x, y)
-                    break;
-                }
-            }
-            //updates bullet class by putting a value of which turret it was fired from
-            bullet.firedFrom = targetting;
         }
     
         bullet.fire(x, y, angle);
+
+        //gets all turrets
+        var Turret = this.turrets.getChildren();
+        for(var i = 0; i < Turret.length; i++){
+            if (Turret[i].getTurret(bullet.x, bullet.y) !== "no_result"){
+                //assigns targetting from the turret it was fired from
+                var targetting = Turret[i].getTurret(bullet.x, bullet.y)
+                break;
+            }
+        }
+        //updates bullet class by putting a value of which turret it was fired from
+        bullet.firedFrom = targetting;
     
     }
 
@@ -306,7 +330,6 @@ export default class GameScene extends Phaser.Scene{
                 //decrease hp
                 attacker.recieveDamage(levelConfig.default.damage);
             }
-            console.log(bullet.firedFrom);
         }
     }
 
