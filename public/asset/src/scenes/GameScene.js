@@ -6,7 +6,7 @@ import FlameThrower from '../objects/FlameThrower.js';
 
 var option = 0;
 
-let mapData, data;
+let mapData, data, unlockData;
 
 $.ajax({
     type: 'GET',
@@ -17,6 +17,7 @@ $.ajax({
             console.log(data[i].email);
             if(data[i].email == getCookie('email')){
                 mapData = data[i].map;
+                unlockData = data[i].units;
             }
         }
     },
@@ -95,21 +96,21 @@ export default class GameScene extends Phaser.Scene{
             defense.alpha = 0.5;
 
             defense.setScale(2);
-
-            /*if(i == 1 && datasci > 0){
-                defense.setInteractive();
-                defense.alpha = 1;
-            }else if(i == 2 && blockchain > 0){
-                defense.setInteractive();
-                defense.alpha = 1;
-            }else if(i == 3 && health > 0){
-                defense.setInteractive();
-                defense.alpha = 1;
-            }else if(i == 4 && AI > 0){
-                defense.setInteractive();
-                defense.alpha = 1;
-            }*/
-
+        
+                if(i == 1 && unlockData[0] > 0){
+                    defense.setInteractive();
+                    defense.alpha = 1;
+                }else if(i == 2 && unlockData[1] > 0){
+                    defense.setInteractive();
+                    defense.alpha = 1;
+                }else if(i == 3 && unlockData[2] > 0){
+                    defense.setInteractive();
+                    defense.alpha = 1;
+                }else if(i == 4 && unlockData[3] > 0){
+                    defense.setInteractive();
+                    defense.alpha = 1;
+                }
+            
             defenseArray += defense.index;
         }
 
