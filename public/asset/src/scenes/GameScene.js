@@ -69,14 +69,46 @@ export default class GameScene extends Phaser.Scene{
 
             defense.index = i;
 
+            defense.alpha = 0.5;
+
             defense.setScale(2);
 
-            defense.setInteractive();
+            /*if(i == 1 && datasci > 0){
+                defense.setInteractive();
+                defense.alpha = 1;
+            }else if(i == 2 && blockchain > 0){
+                defense.setInteractive();
+                defense.alpha = 1;
+            }else if(i == 3 && health > 0){
+                defense.setInteractive();
+                defense.alpha = 1;
+            }else if(i == 4 && AI > 0){
+                defense.setInteractive();
+                defense.alpha = 1;
+            }*/
 
             defenseArray += defense.index;
         }
 
         this.input.on('gameobjectdown', this.InvenClick.bind(this));
+
+        const saveButton = this.add.text(525, 550, 'Save Game', { fill: '#FFFFFF' });
+        saveButton.setInteractive().on('pointerdown', () => this.saveGameData());
+    }
+
+    saveGameData(){
+        $.ajax({
+            type: 'POST',
+            url: '/saveGame',
+            data: {
+                email: getCookie('email'),
+                mapLoad: JSON.stringify(this.map)
+            },
+            success: function(data) {},
+            error: function(xhr) {
+            console.log(xhr);
+            }
+        });
     }
 
     InvenClick(pointer, defense){

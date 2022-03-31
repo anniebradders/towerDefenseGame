@@ -124,6 +124,15 @@ router.route("/GETGET").get(function(req, res) {
 });
 module.exports = router;
 
+router.post('/saveGame', async (req, res) => {
+  console.log(req.body);
+  const { email, mapLoad } = req.body;
+  const mapData = JSON.parse(mapLoad);
+  console.log(mapData);
+  await gameModel.updateOne({ email }, { map: mapData });
+  res.status(200).json({ message: 'saved successfully' });
+});
+
 router.route("/getGame").get(function(req, res) {
   gameModel.find({}, function(err, result) {
     if (err) {
