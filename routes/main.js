@@ -94,16 +94,21 @@ router.post('/logout', (req, res) => {
     if (refreshToken in tokenList) delete tokenList[refreshToken]
     res.clearCookie('refreshJwt');
     res.clearCookie('jwt');
+    res.clearCookie('email')
   }
   res.status(200).json({ message: 'logged out' });
 });
 module.exports = router;
 router.route("/GETGET").get(function(req, res) {
   userModel.find({}, function(err, result) {
+    for (var i=0; i<result.length; i++) {
+      result[i].password = "nicetryhackerman";
+  }
+  console.log(result)
     if (err) {
       res.send(err);
     } else {
-      res.send(result);
+      res.send((result));
     }
   });
 });

@@ -1,5 +1,4 @@
-
-import map from '../config/map.js';
+//import map from '../config/map.js';
 import Turret from '../objects/Turret.js';
 import AntiAir from '../objects/AntiAir.js';
 import Artillery from '../objects/Artillery.js';
@@ -7,17 +6,32 @@ import FlameThrower from '../objects/FlameThrower.js';
 
 var option = 0;
 
+let mapData, data;
+
+$.ajax({
+    type: 'GET',
+    url: '/getGame',
+    data,
+    success: function(data) {
+        for(var i = 0; i < data.length; i++){
+            console.log(data[i].email);
+            if(data[i].email == getCookie('email')){
+                mapData = data[i].map;
+            }
+        }
+    },
+    error: function(xhr) {
+    console.log(xhr);
+    }
+});
+
 export default class GameScene extends Phaser.Scene{
     constructor(){
         super('Game');
     }
 
-
     init(){
-
-        this.map = map.map(function (arr){
-            return arr.slice();
-        });
+        this.map = mapData;
     } 
 
     create(){
@@ -32,7 +46,16 @@ export default class GameScene extends Phaser.Scene{
         this.AntiAir = this.add.group({ classType: AntiAir, runChildUpdate: true });    
         this.Artillery = this.add.group({ classType: Artillery, runChildUpdate: true });
         this.FlameThrower = this.add.group({ classType: FlameThrower, runChildUpdate: true });
-    
+
+        for(var i = 0; i < 8; i++){
+            for(var j = 0; j < 10; j++){
+                var turret = this.turrets.getFirstDead();
+                if(this.map[i][j] == 1){
+                    turret = new Turret(this, 32, 32, this.map);
+                }
+            }
+        }
+
         this.input.on('pointerdown', this.placeTurret.bind(this));
     }
 

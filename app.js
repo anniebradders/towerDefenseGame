@@ -40,6 +40,10 @@ app.get('/menu.html', passport.authenticate('jwt', { session : false }), functio
   res.sendFile(__dirname + '/public/menu.html');
 });
 
+app.get('/skilltree.html', passport.authenticate('jwt', { session : false }), function (req, res) {
+  res.sendFile(__dirname + '/public/skilltree.html');
+});
+
 
 app.use(express.static(__dirname + '/public'));
 
