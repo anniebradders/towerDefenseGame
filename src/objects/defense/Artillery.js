@@ -7,9 +7,19 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.scene = scene;
         this.map = map;
 
+        this.targetting = 0;
+
+
         //add Artillery to game
         this.scene.add.existing(this);
         this.setScale(1.2);
+    }
+
+    getTurretTargetting(x, y){
+        if (this.x === x && this.y === y){
+            return this.targetting;
+        }
+        return "no_result";
     }
 
     place(i, j){

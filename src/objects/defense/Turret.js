@@ -7,6 +7,7 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.scene = scene;
         this.map = map;
         this.nextTic = 0;
+        this.hp = 0;
         //targetting both ground and flying units
         this.targetting = 0;
 
@@ -29,12 +30,25 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.map[i][j] = 1;
     }
 
+    
+
     //returns the targetting when Bullet is created
-    getTurret(x, y){
+    getTurretTargetting(x, y){
         if (this.x === x && this.y === y){
             return this.targetting;
         }
         return "no_result";
+    }
+
+    recieveDamage(damage) {
+        this.hp -= damage;
+    
+        // if hp drops below 0 we deactivate the attacker
+        if (this.hp <= 0) {
+            this.setActive(false);
+            this.setVisible(false);
+            //TODO: update our score
+        }
     }
 
     fire(){

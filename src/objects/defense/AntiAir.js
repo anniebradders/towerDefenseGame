@@ -30,12 +30,14 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.map[i][j] = 1;
     }
 
-    getTurret(x, y){
+    getTurretTargetting(x, y){
         if (this.x === x && this.y === y){
             return this.targetting;
         }
         return "no_result";
     }
+
+    
 
     fire(){
         //returns attackers within the turrets range

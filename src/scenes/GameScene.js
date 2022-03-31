@@ -11,12 +11,14 @@ import Redhat from '../objects/attack/Redhat';
 import Standard from '../objects/attack/Standard';
 import Tank from '../objects/attack/Tank';
 import Bullet from '../objects/misc/Bullet';
+import AttackBullet from '../objects/misc/AttackBullet';
 import levelConfig from '../config/levelConfig';
 
 
 var option = 0;
 var attackerOption = 0; 
 var rand = 0;
+var counter = 0;
 
 export default class GameScene extends Phaser.Scene{
     constructor(){
@@ -30,7 +32,6 @@ export default class GameScene extends Phaser.Scene{
         });
         this.nextAttacker = 0;
         levelConfig.total.attackCount = levelConfig.robot.count + levelConfig.aerial.count + levelConfig.hacker.count + levelConfig.standard.count + levelConfig.tank.count + levelConfig.redhat.count;
-        console.log(levelConfig.total.attackCount);
     } 
 
     create(){
@@ -52,13 +53,16 @@ export default class GameScene extends Phaser.Scene{
         this.standard = this.physics.add.group({ classType: Standard, runChildUpdate: true });
         this.tank = this.physics.add.group({ classType: Tank, runChildUpdate: true });
 
-        this.turrets = this.add.group({ classType: Turret, runChildUpdate: true });
+        this.turrets = this.physics.add.group({ classType: Turret, runChildUpdate: true });
         this.AntiAir = this.add.group({ classType: AntiAir, runChildUpdate: true });    
         this.Artillery = this.add.group({ classType: Artillery, runChildUpdate: true });
         this.FlameThrower = this.add.group({ classType: FlameThrower, runChildUpdate: true });
+
         this.bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+        this.attackBullets = this.physics.add.group({ classType: AttackBullet, runChildUpdate: true });
     
         this.physics.add.overlap(this.robots, this.bullets, this.damageUnit.bind(this));
+        this.physics.add.overlap(this.turrets, this.attackBullets, this.damageDefense.bind(this));
         this.input.on('pointerdown', this.placeTurret.bind(this));
     }
 
@@ -75,7 +79,7 @@ export default class GameScene extends Phaser.Scene{
 
             console.log(levelConfig.total.attackCount)
 
-            attackerOption = Phaser.Math.Between(0, levelConfig.total.attackCount);
+            attackerOption = Phaser.Math.Between(1, levelConfig.total.attackCount);
 
             if((attackerOption < levelConfig.robot.count && attackerOption >= 1) && levelConfig.robot.count > 0){
                 levelConfig.robot.count -= 1;
@@ -276,6 +280,19 @@ export default class GameScene extends Phaser.Scene{
         this.backgroundLayer = this.bgMap.createStaticLayer('Background', this.tiles, 0, 0);
     }
 
+    getTurret(x, y, distance) {
+        //gets all turret units
+        var defense = this.turrets.getChildren();
+        var turretsInRange = [];
+        for (var i = 0; i < defense.length; i++){
+            if (defense[i].active && Phaser.Math.Distance.Between(x, y, defense[i].x, defense[i].y) <= distance){
+                //adds to the turrets in range
+                turretsInRange.push(defense[i]);
+            }
+        }
+        return turretsInRange;
+    }
+
     getAttacker(x, y, distance) {
         //gets all attacking units
         var attackUnits = this.robots.getChildren();
@@ -302,15 +319,28 @@ export default class GameScene extends Phaser.Scene{
         //gets all turrets
         var Turret = this.turrets.getChildren();
         for(var i = 0; i < Turret.length; i++){
-            if (Turret[i].getTurret(bullet.x, bullet.y) !== "no_result"){
+            if (Turret[i].getTurretTargetting(bullet.x, bullet.y) !== "no_result"){
                 //assigns targetting from the turret it was fired from
-                var targetting = Turret[i].getTurret(bullet.x, bullet.y)
+                var targetting = Turret[i].getTurretTargetting(bullet.x, bullet.y)
                 break;
             }
         }
         //updates bullet class by putting a value of which turret it was fired from
         bullet.firedFrom = targetting;
     
+    }
+
+    addAttackerBullet(x, y, angle){
+        var attackerBullet = this.attackBullets.getFirstDead();
+        if (!attackerBullet) {
+            attackerBullet = new AttackBullet(this, 0, 0);
+            console.log("hi");
+            this.attackBullets.add(attackerBullet);
+        }
+    
+        attackerBullet.fire(x, y, angle);
+
+        //updates bullet class by putting a value of which turret it was fired from    
     }
 
     damageUnit(attacker, bullet){
@@ -330,7 +360,22 @@ export default class GameScene extends Phaser.Scene{
                 //decrease hp
                 attacker.recieveDamage(levelConfig.default.damage);
             }
+            
+            console.log("not killed")
+            
         }
+    }
+
+    damageDefense(turret, bullet){
+        if (turret.active === true && bullet.active === true) {
+            //attacker flying and the turret can hit flying units
+        
+            bullet.setActive(false);
+            bullet.setVisible(false);
+            //decrease hp
+            turret.recieveDamage(levelConfig.default.damage);
+        }
+            
     }
 
     placeTurret(pointer){
