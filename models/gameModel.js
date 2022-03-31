@@ -34,72 +34,54 @@ const gameSchema = new Schema({
       required: true,
       default: 0
   },
-  datasci : {
-      type: Number,
-      required: true,
-      default: 0
+  units : {
+    type : Array,
+    required : true,
+    default: 
+        [ 0,0, 0, 0, 0, 0, 0, 0, 0],
   },
-  block : {
+
+  unit1 : {
     type: Number,
     required: true,
     default: 0
   },
-  health : {
+  unit2 : {
     type: Number,
     required: true,
     default: 0
   },
-  AI : {
+  unit3 : {
     type: Number,
     required: true,
     default: 0
   },
-  capstone : {
+  unit4 : {
     type: Number,
     required: true,
     default: 0
   },
-  auto : {
+  unit5 : {
     type: Number,
     required: true,
     default: 0
   },
-  cloud : {
+  unit6 : {
     type: Number,
     required: true,
     default: 0
   },
-  security : {
+  unit7 : {
     type: Number,
     required: true,
     default: 0
   },
-  Z : {
+  unit8 : {
     type: Number,
     required: true,
     default: 0
   },
-  law : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  power : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  power : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  red : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  quantum : {
+  unit9 : {
     type: Number,
     required: true,
     default: 0

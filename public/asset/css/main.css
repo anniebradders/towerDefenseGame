@@ -227,15 +227,16 @@ h1 {
 }
 
 .skillbox1 {
+  position:relative;
   border-width: 1px;
   padding-top: 0%;
   text-align: center;
-  background-color: #ffffff;
+  background-color: none;
   font-size: 12px;
   width: fit-content;
   border-style: solid;
   border-color: #89baff;
-  height: 100px;
+  height: 260px;
   vertical-align: middle;
   max-height: 400px;
   min-width: 70px;
@@ -256,15 +257,11 @@ h1 {
 .hide {
   display: none;
 }
-
-.skillbox1:hover {
-  background-color: #89baff;
-  height: 260px;
+#bottom {
+  position:absolute;                 
+  bottom:0;                         
+  left:0;                         
 }
-
-  .skillbox1:hover > .hide {
-      display: block;
-  }
 
 
 
@@ -274,4 +271,9 @@ h1 {
   text-align: center;
   color: #0043ce;
   font-size: 1.4vw;
+}
+
+.subd {
+  position: absolute;
+  bottom: 0px;
 }

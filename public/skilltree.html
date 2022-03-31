@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<title>Main Menu</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.95">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="asset/bootstrap/dist/css/bootstrap.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="asset/js/refreshToken.js"></script>
+<script src="asset/js/site.js"></script>
+<script src="asset/js/manageBadges.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+<link rel="stylesheet" href="asset/css/main.css">
+</head>
+<body class="text-center" style="background-color: #edf5ff">
+    <div class="container">
+
+        <div class="row" >
+            <div class="col-2" >
+                 <a href="menu.html"><div class="boxed">Back To Menu</div></a>
+                 
+             
+                 
+             </div>
+             <div class="col-6" >
+                 <div class="row">
+                 <p class="headline">Your IBM Skill tree</p>
+                 </div>
+                 <div class="row">
+                     
+                     <p id="demo"> Welcome: </p>
+                     <p>Click on a Module to start learning and upgrade your army!</p>
+                     <p id="errmsg"></p>
+                 </div>
+             </div>
+             <div class="col-4">
+                 <img src="/asset/files/logo.png"  width="100%">
+             </div>
+         </div>    
+<div class="row">
+    <div class="col-45">
+        <div class="skillbox" ><h4>Branch 1- IBM cloud </h4><br>
+            Using your aquired knowledge of all things cloud
+             computing, you can improve the ability of your 
+             airbourne divisions. 
+            
+            </div>
+
+    </div>
+    
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/getting-started-with-cloud-for-the-enterprise"><h4 >Level 1</h4></a>
+            <p >Getting Started with cloud- <br>Unlocks aerial Unit</p>
+            <div id="bottom" id="1.1">
+            <label for="unlock">Unlock Link</label>
+            <input id="1" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(1)">Unlock</a></h3>
+            </div>
+        </div>
+    </div> 
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/journey-to-cloud-envisioning-your-solution"><h4 >Level 2</h4></a>
+            <p>Envisioning Your Solution- <br>Unlocks flamethrower</p>
+            <div id="bottom" id="1.2">
+            <label for="unlock">Unlock Link</label>
+            <input id="2" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(2)">Unlock</a></h3>
+            </div>
+        </div>
+    </div> 
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/improving-healthcare-the-role-of-cloud-computing"><h4 >Level 3</h4></a>
+            <p>Improving Healthcare: The Role of Cloud Computing-<br> unlocks blahblah</p>
+            <div id="bottom" id="1.3">
+            <label for="unlock">Unlock Link</label>
+            <input id="3" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(3)">Unlock</a></h3>
+            </div>
+        </div>
+    </div> 
+        <div class="col-3" >
+            <p>                          </p>
+        </div>
+       
+
+</div>
+<div class="row">
+    <div class="col-45">
+        <div class="skillbox" ><h4>Branch 2- Capstone</h4><br>
+            Starting on a new capstone project, culminating project, or senior exhibition. Check out this collection of resources that will get you started on modern enterprise design and development. </div>
+    </div>
+    
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/getting-started-with-cloud-for-the-enterprise"><h4 >Level 1</h4></a>
+            <p >Getting Started with Enterprise-grade AI <br>unlocks blahblah</p>
+            <div id="bottom" id="2.1">
+            <label for="unlock">Unlock Link</label>
+            <input id="4" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(4)">Unlock</a></h3>
+            </div>
+        </div>
+    </div> 
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/journey-to-cloud-envisioning-your-solution"><h4 >Level 2</h4></a>
+            <p>Getting Started with Enterprise Data Science-  <br>unlocks blahblah</p>
+            <div id="bottom" id="2.2">
+            <label for="unlock">Unlock Link</label>
+            <input id="5" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(5)">Unlock</a></h3>
+            </div>
+        </div>
+    </div> 
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/improving-healthcare-the-role-of-cloud-computing"><h4 >Level 3</h4></a>
+            <p>Getting Started with Threat Intelligence and Hunting <br>- unlocks blahblah</p>
+            <div id="bottom" id="2.3">
+            <label for="unlock">Unlock Link</label>
+            <input id="6" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(6)">Unlock</a></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/improving-healthcare-the-role-of-cloud-computing"><h4 >Level 4</h4></a>
+            <p>Getting Started with Cloud for the Enterprise
+                <br> - unlocks blahblah</p>
+            <div id="bottom" id="2.4">
+            <label for="unlock">Unlock Link</label>
+            <input id="7" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(7)">Unlock</a></h3>
+            </div>
+        </div>
+    </div> 
+       
+
+</div>
+<div class="row">
+    <div class="col-45">
+        <div class="skillbox" ><h4>Branch 3- Artificial Intelligence </h4><br>
+            Leverage technologies like IBM Watson that uses natural language processing and machine learning to reveal insights from large amounts of unstructured data.. </div>
+    </div>
+    
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/getting-started-with-cloud-for-the-enterprise"><h4 >Level 1</h4></a>
+            <p >Getting Started with Enterprise-grade AI- <br>Unlocks Unit</p>
+            <div  id="bottom" id="3.1">
+                <form>
+            <label for="unlock">Unlock Link</label>
+            <input id="8" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(8)">Unlock</a></h3>
+        </form>
+            </div>
+        </div>
+    </div> 
+    <div class="col-15" >
+            <div class="skillbox1" >
+            <a href="https://www.ibm.com/academic/badges/journey-to-cloud-envisioning-your-solution"><h4 >Level 2</h4></a>
+            <p>Improving Healthcare: The Role of Artificial Intelligence<br> - unlocks blahblah</p>
+            <div  id="bottom" id="3.2">
+            <form>
+            <label for="unlock">Unlock Link</label>
+            <input id="9" class="form-control" placeholder="LinkedIn Link" required>
+            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(9)">Unlock</a></h3>
+            </form>
+            </div>
+        </div>
+    </div> 
+        <div class="col-45" >
+            <p>                          </p>
+        </div>
+       
+
+</div>
+    </div></body>

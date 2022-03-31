@@ -25,6 +25,16 @@ router.post('/signup', function (req, res, next) {
     res.json(201, post)
   })
 })
+router.post('/submitbadge', async (req, res) => {
+  console.log(req.body);
+  //const { user, key, value} = req.body;
+  var user = req.body.user;
+  var key = req.body.key;
+  var units = JSON.parse(req.body.units);
+  console.log(units);
+  await gameModel.updateOne({ user }, { units : units});
+  res.status(200).json({ message: 'saved successfully' });
+});
 router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
@@ -124,3 +134,5 @@ router.route("/getGame").get(function(req, res) {
   });
 });
 module.exports = router;
+
+
