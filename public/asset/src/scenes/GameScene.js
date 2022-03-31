@@ -1,10 +1,23 @@
 //import map from '../config/map.js';
-import Turret from '../objects/Turret.js';
-import AntiAir from '../objects/AntiAir.js';
-import Artillery from '../objects/Artillery.js';
-import FlameThrower from '../objects/FlameThrower.js';
+import Turret from '../objects/defense/Turret.js';
+import AntiAir from '../objects/defense/AntiAir.js';
+import Artillery from '../objects/defense/Artillery.js';
+import FlameThrower from '../objects/defense/FlameThrower.js';
+
+import Robot from '../objects/attack/Robot.js';
+import Aerial from '../objects/attack/Aerial.js';
+import Hacker from '../objects/attack/Hacker.js';
+import Redhat from '../objects/attack/Redhat.js';
+import Standard from '../objects/attack/Standard.js';
+import Tank from '../objects/attack/Tank.js';
+import Bullet from '../objects/misc/Bullet.js';
+import AttackBullet from '../objects/misc/AttackBullet.js';
+import levelConfig from '../config/levelConfig.js';
 
 var option = 0;
+var attackerOption = 0; 
+var rand = 0;
+var counter = 0;
 
 let mapData, data, unlockData;
 
@@ -39,14 +52,29 @@ export default class GameScene extends Phaser.Scene{
       this.createMap();
       this.createInventory();
       this.createCursor();
+      this.createPath();
+      this.createArrow();
       this.createGroups();
     }
 
     createGroups(){
+        this.robots = this.physics.add.group({ classType: Robot, runChildUpdate: true });
+        this.aerial = this.physics.add.group({ classType: Aerial, runChildUpdate: true });
+        this.hacker = this.physics.add.group({ classType: Hacker, runChildUpdate: true });
+        this.redhat = this.physics.add.group({ classType: Redhat, runChildUpdate: true });
+        this.standard = this.physics.add.group({ classType: Standard, runChildUpdate: true });
+        this.tank = this.physics.add.group({ classType: Tank, runChildUpdate: true });
+
         this.turrets = this.add.group({ classType: Turret, runChildUpdate: true });
         this.AntiAir = this.add.group({ classType: AntiAir, runChildUpdate: true });    
         this.Artillery = this.add.group({ classType: Artillery, runChildUpdate: true });
         this.FlameThrower = this.add.group({ classType: FlameThrower, runChildUpdate: true });
+
+        this.bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+        this.attackBullets = this.physics.add.group({ classType: AttackBullet, runChildUpdate: true });
+    
+        this.physics.add.overlap(this.robots, this.bullets, this.damageUnit.bind(this));
+        this.physics.add.overlap(this.turrets, this.attackBullets, this.damageDefense.bind(this));
 
         for(var i = 0; i < 8; i++){
             for(var j = 0; j < 10; j++){
@@ -81,6 +109,120 @@ export default class GameScene extends Phaser.Scene{
         }
 
         this.input.on('pointerdown', this.placeTurret.bind(this));
+    }
+
+    update(time, delta) {
+        if(time > this.nextAttacker) {
+            if (levelConfig.total.attackCount == 0){
+                
+            }
+            else{
+
+            var attacker = this.robots.getFirstDead();
+            rand = Phaser.Math.Between(0, 3);
+
+            console.log(levelConfig.total.attackCount)
+
+            attackerOption = Phaser.Math.Between(1, levelConfig.total.attackCount);
+
+            if((attackerOption < levelConfig.robot.count && attackerOption >= 1) && levelConfig.robot.count > 0){
+                levelConfig.robot.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Robot(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Robot(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Robot(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Robot(this, 0, 0, this.path4);
+                }
+                
+            }else if((attackerOption < (levelConfig.aerial.count + levelConfig.robot.count)  && attackerOption >= levelConfig.robot.count) && levelConfig.aerial.count > 0){
+                levelConfig.aerial.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Aerial(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Aerial(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Aerial(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Aerial(this, 0, 0, this.path4);
+                }
+            }else if((attackerOption < (levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && attackerOption >= levelConfig.aerial.count) && levelConfig.hacker.count > 0){
+                levelConfig.hacker.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Hacker(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Hacker(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Hacker(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Hacker(this, 0, 0, this.path4);
+                }
+            }else if((attackerOption < (levelConfig.standard.count + levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && attackerOption >= levelConfig.aerial.count) && levelConfig.standard.count > 0){
+                levelConfig.standard.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Standard(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Standard(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Standard(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Standard(this, 0, 0, this.path4);
+                }
+            }else if((attackerOption < (levelConfig.tank.count + levelConfig.standard.count + levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && attackerOption >= levelConfig.aerial.count) && levelConfig.tank.count > 0){
+                levelConfig.tank.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Tank(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Tank(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Tank(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Tank(this, 0, 0, this.path4);
+                }
+            }else if(attackerOption < (levelConfig.redhat.count + levelConfig.tank.count + levelConfig.standard.count + levelConfig.hacker.count + levelConfig.aerial.count + levelConfig.robot.count) && levelConfig.redhat.count > 0){
+                levelConfig.redhat.count -= 1;
+                levelConfig.total.attackCount -= 1;
+                if (rand === 0){
+                    attacker = new Redhat(this, 0, 0, this.path);
+                }else if(rand === 1){
+                    attacker = new Redhat(this, 0, 0, this.path2);
+                }else if(rand === 2){
+                    attacker = new Redhat(this, 0, 0, this.path3);
+                }else if(rand === 3){
+                    attacker = new Redhat(this, 0, 0, this.path4);
+                }
+            }
+                
+                this.robots.add(attacker);
+                attacker.startOnPath();
+                this.nextAttacker = time + 200;
+            }   
+        }
+    }
+
+    createAttackerInventory(){
+        var attackArray;
+
+        var x = -50;
+
+        for(var i = 1; i < 7; i++){
+            let attack = this.add.image(x+=100,650,"attack" + i);
+
+            attack.index = i;
+
+            attack.setScale(2);
+
+            attack.setInteractive();
+
+            attackArray += attack.index;
+        }
     }
 
     createInventory(){
@@ -118,6 +260,9 @@ export default class GameScene extends Phaser.Scene{
 
         const saveButton = this.add.text(525, 550, 'Save Game', { fill: '#FFFFFF' });
         saveButton.setInteractive().on('pointerdown', () => this.saveGameData());
+
+        const attackButton = this.add.text(25, 550, 'Attack', { fill: '#FFFFFF' });
+        attackButton.setInteractive().on('pointerdown', () => this.launchAttack());
     }
 
     saveGameData(){
@@ -137,6 +282,10 @@ export default class GameScene extends Phaser.Scene{
 
     InvenClick(pointer, defense){
         option = defense.index-1;
+
+        var attacker = this.robots.getFirstDead();
+
+        attacker = new Robot(this, 0, 0, this.path);
     }
 
     createCursor(){
@@ -157,10 +306,34 @@ export default class GameScene extends Phaser.Scene{
         }.bind(this));
     }
 
+    createArrow(){
+        this.add.image(32, 550, 'arrow')
+
+    }
+    
+
     canPlaceTurret(i, j){
         if(i < 8 && j < 10){
             return this.map[i][j] === 0;
         }
+    }
+
+    createPath(){
+        this.graphics = this.add.graphics();
+        //the path the enemies follow
+        this.path = this.add.path(700, 32);
+        this.path.lineTo(32, 32);
+        
+
+        this.path2 = this.add.path(700, 96);
+        this.path2.lineTo(32, 96);
+
+        this.path3 = this.add.path(700, 160);
+        this.path3.lineTo(32, 160);
+
+        this.path4 = this.add.path(700, 224);
+        this.path4.lineTo(32, 224);
+
     }
 
     createMap(){
@@ -170,6 +343,104 @@ export default class GameScene extends Phaser.Scene{
         this.tiles = this.bgMap.addTilesetImage('terrainTiles_default');
         //create our background layer
         this.backgroundLayer = this.bgMap.createStaticLayer('Background', this.tiles, 0, 0);
+    }
+
+    getTurret(x, y, distance) {
+        //gets all turret units
+        var defense = this.turrets.getChildren();
+        var turretsInRange = [];
+        for (var i = 0; i < defense.length; i++){
+            if (defense[i].active && Phaser.Math.Distance.Between(x, y, defense[i].x, defense[i].y) <= distance){
+                //adds to the turrets in range
+                turretsInRange.push(defense[i]);
+            }
+        }
+        return turretsInRange;
+    }
+
+    getAttacker(x, y, distance) {
+        //gets all attacking units
+        var attackUnits = this.robots.getChildren();
+        var attackersInRange = [];
+        for (var i = 0; i < attackUnits.length; i++){
+            if (attackUnits[i].active && Phaser.Math.Distance.Between(x, y, attackUnits[i].x, attackUnits[i].y) <= distance){
+                //adds to the attackers in range
+                attackersInRange.push(attackUnits[i]);
+            }
+        }
+        return attackersInRange;
+    }
+
+    addBullet(x, y, angle){
+        var bullet = this.bullets.getFirstDead();
+        if (!bullet) {
+            bullet = new Bullet(this, 0, 0);
+            this.bullets.add(bullet);
+
+        }
+    
+        bullet.fire(x, y, angle);
+
+        //gets all turrets
+        var Turret = this.turrets.getChildren();
+        for(var i = 0; i < Turret.length; i++){
+            if (Turret[i].getTurretTargetting(bullet.x, bullet.y) !== "no_result"){
+                //assigns targetting from the turret it was fired from
+                var targetting = Turret[i].getTurretTargetting(bullet.x, bullet.y)
+                break;
+            }
+        }
+        //updates bullet class by putting a value of which turret it was fired from
+        bullet.firedFrom = targetting;
+    
+    }
+
+    addAttackerBullet(x, y, angle){
+        var attackerBullet = this.attackBullets.getFirstDead();
+        if (!attackerBullet) {
+            attackerBullet = new AttackBullet(this, 0, 0);
+            console.log("hi");
+            this.attackBullets.add(attackerBullet);
+        }
+    
+        attackerBullet.fire(x, y, angle);
+
+        //updates bullet class by putting a value of which turret it was fired from    
+    }
+
+    damageUnit(attacker, bullet){
+        if (attacker.active === true && bullet.active === true) {
+            //attacker flying and the turret can hit flying units
+            if (attacker.flying === true && (bullet.firedFrom === 2  || bullet.firedFrom === 0) ){
+
+                bullet.setActive(false);
+                bullet.setVisible(false);
+                //decrease hp
+                attacker.recieveDamage(levelConfig.default.damage);
+                
+            }
+            if (attacker.flying === false && bullet.firedFrom !== 2){
+                bullet.setActive(false);
+                bullet.setVisible(false);
+                //decrease hp
+                attacker.recieveDamage(levelConfig.default.damage);
+            }
+            
+            console.log("not killed")
+            
+        }
+    }
+
+    damageDefense(turret, bullet){
+        if (turret.active === true && bullet.active === true) {
+            //attacker flying and the turret can hit flying units
+        
+            bullet.setActive(false);
+            bullet.setVisible(false);
+            //decrease hp
+            turret.recieveDamage(levelConfig.default.damage);
+        }
+            
     }
 
     placeTurret(pointer){
@@ -196,4 +467,10 @@ export default class GameScene extends Phaser.Scene{
             //TODO: ADD LOGIC TO UPDATE NUM OF TURRETS
         }
     }
+
+    launchAttack(){
+        this.nextAttacker = 0;
+        levelConfig.total.attackCount = levelConfig.robot.count + levelConfig.aerial.count + levelConfig.hacker.count + levelConfig.standard.count + levelConfig.tank.count + levelConfig.redhat.count;
+    } 
+
 }

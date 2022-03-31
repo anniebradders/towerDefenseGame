@@ -39,6 +39,7 @@ passport.use('login', new localStrategy({
       return done(error);
     }
   }));
+  
   // verify token is valid
   passport.use(new JWTstrategy({
     secretOrKey: 'top_secret',

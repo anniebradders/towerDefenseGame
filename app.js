@@ -1,6 +1,7 @@
 // reads in our .env file and makes those values available as environment variables
 require('dotenv').config();
 
+//loads modules we need
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -29,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-
 app.use(bodyParser.json()); // parse application/json
 app.use(cookieParser());
 
-// require passport auth
+//require passport auth
 require('./auth/auth');
 
 app.get('/game.html', passport.authenticate('jwt', { session : false }), function (req, res) {
@@ -62,12 +63,11 @@ app.use((req, res, next) => {
 
 // handle errors
 app.use((err, req, res, next) => {
-  // TODO: add note about updating this
   console.log(err.message);
   res.status(err.status || 500).json({ error: err.message });
 });
 
-// have the server start listening on the provided port
+// have the server start listening on port 3000
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server started on port ${process.env.PORT || 3000}`);
 });

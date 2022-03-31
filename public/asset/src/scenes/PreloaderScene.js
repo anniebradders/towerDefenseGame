@@ -107,6 +107,15 @@ export default class PreloaderScene extends Phaser.Scene{
         this.load.image('defense4', '../assets/defense/FlameThrower.png' )
         this.load.image('cursor', '../assets/ui/cursor.png')
 
+        this.load.image('attack1', './assets/attack/Aerial.png');
+        this.load.image('attack2', './assets/attack/Hacker.png');
+        this.load.image('attack3', './assets/attack/Redhat.png');
+        this.load.image('attack4', './assets/attack/Robot.png');
+        this.load.image('attack5', './assets/attack/Standard.png');
+        this.load.image('attack6', './assets/attack/Tank.png');
+
+        this.load.image('arrow', './assets/ui/arrow.png')
+
         //placeholder
         this.load.image('logo2', '../assets/logo.png');
 
