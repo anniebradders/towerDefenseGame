@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import levelConfig from '../../config/levelConfig';
 
 export default class Turret extends Phaser.GameObjects.Image{
     constructor(scene, x, y, map){
@@ -20,17 +21,16 @@ export default class Turret extends Phaser.GameObjects.Image{
         //time to shoot
         if(time > this.nextTic){
             this.fire();
-            this.nextTic = time + 1000;
+            this.nextTic = time + 1000 * levelConfig.turret.firerate;
         }
     }
     //places on map
     place(i, j){
         this.y = i * 64 + 32;
         this.x = j * 64 + 32;
+        this.hp = levelConfig.turret.health;
         this.map[i][j] = 1;
     }
-
-    
 
     //returns the targetting when Bullet is created
     getTurretTargetting(x, y){
@@ -53,7 +53,7 @@ export default class Turret extends Phaser.GameObjects.Image{
 
     fire(){
         //returns attackers within the turrets range
-        var attackersInRange = this.scene.getAttacker(this.x, this.y, 200);
+        var attackersInRange = this.scene.getAttacker(this.x, this.y, (50 * levelConfig.turret.range));
         if (attackersInRange.length >= 1) {
             //fires at the closest attacker in range
             var angle = Phaser.Math.Angle.Between(this.x, this.y, attackersInRange[0].x, attackersInRange[0].y);

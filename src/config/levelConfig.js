@@ -64,7 +64,6 @@ export default {
     //defense
 
     antiAir: {
-        speed: 1/10000,
         range: 6,
         firerate: 0.5,
         health: 600,
@@ -72,7 +71,6 @@ export default {
         count: 0
     },
     artillery: {
-        speed: 1/10000,
         range: 5,
         firerate: 3,
         health: 600,
@@ -80,16 +78,14 @@ export default {
         count: 0
     },
     flamethrower: {
-        speed: 1/10000,
         range: 4,
-        firerate: 1,
+        firerate: 0.5,
         health: 400,
         damage: 40,
         count: 0
         
     },
     turret: {
-        speed: 1/10000,
         range: 5,
         firerate: 0.5,
         health: 600,

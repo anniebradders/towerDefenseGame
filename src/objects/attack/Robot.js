@@ -31,10 +31,10 @@ export default class Robot extends Phaser.GameObjects.Image{
         //time to shoot
         if(time > this.nextTic){
             this.fire();
-            this.nextTic = time + 1000;
+            this.nextTic = time + 1000 * levelConfig.robot.firerate;
         }
         else {
-            this.enemySpeed = levelConfig.default.speed;
+            this.enemySpeed = levelConfig.robot.speed;
         }
 
         if (this.follower.t >= 1){
@@ -51,9 +51,9 @@ export default class Robot extends Phaser.GameObjects.Image{
         //Adding user stats such as a userConfig file or something 
         
         //set health
-        this.hp = levelConfig.default.health;
+        this.hp = levelConfig.robot.health;
         //set speed
-        this.enemySpeed = levelConfig.default.speed;
+        this.enemySpeed = levelConfig.robot.speed;
 
 
         //set the t parameter at the start of the path
@@ -77,9 +77,10 @@ export default class Robot extends Phaser.GameObjects.Image{
             //TODO: update our score
         }
     }
+
     fire(){
         //returns attackers within the turrets range
-        var turretInRange = this.scene.getTurret(this.x, this.y, 200);
+        var turretInRange = this.scene.getTurret(this.x, this.y, (50 * levelConfig.robot.range) );
         if (turretInRange.length >= 1) {
             //fires at the closest attacker in range
             var angle = Phaser.Math.Angle.Between(this.x, this.y, turretInRange[0].x, turretInRange[0].y);

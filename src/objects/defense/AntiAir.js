@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import levelConfig from '../../config/levelConfig';
 
 export default class Turret extends Phaser.GameObjects.Image{
     constructor(scene, x, y, map){
@@ -7,7 +8,7 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.scene = scene;
         this.map = map;
         this.nextTic = 0;
-
+        this.hp = 0;
         //targetting both ground and flying units
         this.targetting = 2;
 
@@ -20,13 +21,14 @@ export default class Turret extends Phaser.GameObjects.Image{
         //time to shoot
         if(time > this.nextTic){
             this.fire();
-            this.nextTic = time + 1000;
+            this.nextTic = time + 1000 * levelConfig.antiAir.firerate;
         }
     }
 
     place(i, j){
         this.y = i * 64 + 32;
         this.x = j * 64 + 32;
+        this.hp = levelConfig.antiAir.health;
         this.map[i][j] = 1;
     }
 
@@ -37,11 +39,20 @@ export default class Turret extends Phaser.GameObjects.Image{
         return "no_result";
     }
 
+    recieveDamage(damage) {
+        this.hp -= damage;
     
+        // if hp drops below 0 we deactivate the attacker
+        if (this.hp <= 0) {
+            this.setActive(false);
+            this.setVisible(false);
+            //TODO: update our score
+        }
+    }
 
     fire(){
         //returns attackers within the turrets range
-        var attackersInRange = this.scene.getAttacker(this.x, this.y, 200);
+        var attackersInRange = this.scene.getAttacker(this.x, this.y, (50 * levelConfig.antiAir.range));
         if (attackersInRange.length >= 1) {
             var target = false;
             for (var i = 0; i < attackersInRange.length; i++){
