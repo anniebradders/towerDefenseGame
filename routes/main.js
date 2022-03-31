@@ -26,15 +26,15 @@ router.post('/signup', function (req, res, next) {
   })
 })
 router.post('/submitbadge', async (req, res) => {
-  console.log(req.body);
-  //const { user, key, value} = req.body;
-  var user = req.body.user;
-  var key = req.body.key;
-  var units = JSON.parse(req.body.units);
-  console.log(units);
-  await gameModel.updateOne({ user }, { units : units});
+  var data = JSON.parse(req.body.data);
+  var user = data.user;
+  console.log("user" + user);
+  var units = data.units;
+  console.log("units" + units);
+  await gameModel.updateOne({ email: user }, { units : units});
   res.status(200).json({ message: 'saved successfully' });
 });
+
 router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
@@ -104,7 +104,7 @@ router.post('/logout', (req, res) => {
     if (refreshToken in tokenList) delete tokenList[refreshToken]
     res.clearCookie('refreshJwt');
     res.clearCookie('jwt');
-    res.clearCookie('email')
+    res.clearCookie('email');
   }
   res.status(200).json({ message: 'logged out' });
 });
