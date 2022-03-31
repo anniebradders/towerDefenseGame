@@ -10,7 +10,7 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.nextTic = 0;
         this.hp = 0;
         //targetting ground units
-        this.targetting = 2;
+        this.targetting = 1;
 
         //add FlameThrower to game
         this.scene.add.existing(this);

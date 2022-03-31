@@ -77,8 +77,6 @@ export default class GameScene extends Phaser.Scene{
             var attacker = this.robots.getFirstDead();
             rand = Phaser.Math.Between(0, 3);
 
-            console.log(levelConfig.total.attackCount)
-
             attackerOption = Phaser.Math.Between(1, levelConfig.total.attackCount);
 
             if((attackerOption < levelConfig.robot.count && attackerOption >= 1) && levelConfig.robot.count > 0){
@@ -307,6 +305,7 @@ export default class GameScene extends Phaser.Scene{
     }
 
     addBullet(x, y, angle){
+
         var bullet = this.bullets.getFirstDead();
         if (!bullet) {
             bullet = new Bullet(this, 0, 0);
@@ -334,7 +333,6 @@ export default class GameScene extends Phaser.Scene{
         var attackerBullet = this.attackBullets.getFirstDead();
         if (!attackerBullet) {
             attackerBullet = new AttackBullet(this, 0, 0);
-            console.log("hi");
             this.attackBullets.add(attackerBullet);
         }
     
@@ -347,22 +345,47 @@ export default class GameScene extends Phaser.Scene{
         if (attacker.active === true && bullet.active === true) {
             //attacker flying and the turret can hit flying units
             if (attacker.flying === true && (bullet.firedFrom === 2  || bullet.firedFrom === 0) ){
-
-                bullet.setActive(false);
-                bullet.setVisible(false);
-                //decrease hp
-                attacker.recieveDamage(levelConfig.default.damage);
+               
+                //turret damage
+                if (bullet.firedFrom === 0){
+                    bullet.setActive(false);
+                    bullet.setVisible(false);
+                    //decrease hp
+                    attacker.recieveDamage(levelConfig.turret.damage);
+                }
+                //has to be antiair
+                else{
+                    bullet.setActive(false);
+                    bullet.setVisible(false);
+                    //decrease hp
+                    attacker.recieveDamage(levelConfig.antiAir.damage);
+                }
                 
             }
             if (attacker.flying === false && bullet.firedFrom !== 2){
-                bullet.setActive(false);
-                bullet.setVisible(false);
-                //decrease hp
-                attacker.recieveDamage(levelConfig.default.damage);
+
+                if (bullet.firedFrom === 0){
+                    
+                    bullet.setActive(false);
+                    bullet.setVisible(false);
+                    
+                    attacker.recieveDamage(levelConfig.turret.damage);
+
+                }else if(bullet.firedFrom === 1){
+
+                    
+                    
+                    attacker.recieveDamage(levelConfig.flamethrower.damage);
+
+                }else if(bullet.firedFrom === 3){
+
+                    
+
+                    attacker.recieveDamage(levelConfig.artillery.damage);
+
+                }
             }
-            
-            console.log("not killed")
-            
+                        
         }
     }
 
