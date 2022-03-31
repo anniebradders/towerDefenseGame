@@ -1,3 +1,4 @@
+//load modules
 const passport = require('passport');
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -5,6 +6,7 @@ const UserModel = require('../models/userModel');
 const tokenList = {};
 const router = express.Router();
 const userModel = require('../models/userModel');
+const asyncMiddleware = require('../middleware/asyncMiddleware');
 const gameModel = require('../models/gameModel')
 const mongoose = require('mongoose')
 
@@ -16,7 +18,7 @@ router.post('/signup', passport.authenticate('signup', { session: false }), asyn
   res.status(200).json({ message: 'signup successful' });
 });
 
-router.post('/signup', function (req, res, next) {
+/*router.post('/signup', function (req, res, next) {
   var posts = new gameModel({
     email : req.data.email
   })
@@ -24,7 +26,15 @@ router.post('/signup', function (req, res, next) {
     if (err) { return next(err) }
     res.json(201, post)
   })
-})
+})*/
+
+//creates new user and stores in the users table
+router.post('/signup', asyncMiddleware( async (req, res, next) => {
+  const { name, email, password } = req.body;
+  await UserModel.create({ email, password, name });
+  res.status(200).json({ 'status': 'ok' });
+}));
+
 router.post('/submitbadge', async (req, res) => {
   console.log(req.body);
   //const { user, key, value} = req.body;
@@ -35,6 +45,7 @@ router.post('/submitbadge', async (req, res) => {
   await gameModel.updateOne({ user }, { units : units});
   res.status(200).json({ message: 'saved successfully' });
 });
+
 router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
