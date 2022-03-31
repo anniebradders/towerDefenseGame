@@ -51,7 +51,30 @@ export default class GameScene extends Phaser.Scene{
             for(var j = 0; j < 10; j++){
                 var turret = this.turrets.getFirstDead();
                 if(this.map[i][j] == 1){
+                    console.log(this.map[i][j]);
                     turret = new Turret(this, 32, 32, this.map);
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+                    this.turrets.add(turret);
+                }else if(this.map[i][j] == 2){
+                    turret = new AntiAir(this, 0, 0, this.map);
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+                    this.turrets.add(turret);
+                }else if(this.map[i][j] == 3){
+                    turret = new Artillery(this, 0, 0, this.map);
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+                    this.turrets.add(turret);
+                }else if(this.map[i][j] == 4){
+                    turret = new FlameThrower(this, 0, 0, this.map);
+                    turret.setActive(true);
+                    turret.setVisible(true);
+                    turret.place(i, j);
+                    this.turrets.add(turret);
                 }
             }
         }
