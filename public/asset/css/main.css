@@ -174,6 +174,12 @@ h1 {
   font-size: 20px;
 }
 
+h5{
+  color: #0043ce;
+  text-align: left;
+  font-size: 20px;
+}
+
 .subtitle1 {
   color: #0043ce;
   text-align: left;
@@ -205,11 +211,13 @@ h1 {
   padding-left: 5px;
   margin-right: 200px;
 }
-
+.skillbox1:hover {
+  background-color: #89baff;
+}
 .skillbox {
-  text-align: center;
+  text-align: left;
   background-color: none;
-  min-height: 260px;
+  min-height: 300px;
   max-height: 500px;
   min-width: 70px;
   border-style: solid;
@@ -234,12 +242,13 @@ h1 {
   background-color: none;
   font-size: 12px;
   width: fit-content;
+  height: fit-content;
   border-style: solid;
   border-color: #89baff;
-  height: 260px;
+  min-height:300px;
   vertical-align: middle;
-  max-height: 400px;
-  min-width: 70px;
+ 
+  min-width: 50px;
   word-wrap: break-word;
   transition: height 0.5s,background-color 0.5s ease;
 }
@@ -257,10 +266,16 @@ h1 {
 .hide {
   display: none;
 }
-#bottom {
-  position:absolute;                 
-  bottom:0;                         
-  left:0;                         
+.bottom {
+  position:absolute;    
+  left:1px;             
+  bottom:0;                 
+                      
+}
+.mini{
+  align-items:left;
+  height:32px;
+  width:32px;
 }
 
 

@@ -1,4 +1,53 @@
-
+window.onload = function() {
+    var unitData, emailData, data = loadin();
+    function loadin(){
+        $.ajax({
+            type: 'GET',
+            url: '/getGame',
+            data,
+            success: function(data) {
+                console.log(data.length);
+                for(var i = 0; i < data.length; i++){
+                    console.log(data);
+                   var emme = ('"' + getCookie('email') +'"');
+                   console.log(emme);
+                    var emem = JSON.stringify(data[i].email);
+                    console.log(emem);
+                    if(emme == emem){
+                       unitData = data[i].units;
+                       emailData = data[i].email;
+                       console.log( "unitFromUUnitGet" + unitData);
+                    unitArr = Object.values(unitData);
+                    console.log("arrayoj" + unitArr[0]);
+                    console.log(typeof(unitData));
+                    }
+                    
+                }
+                for(var b = 0; b<12; b++){
+                    if(unitArr[b] == 1){
+                        console.log("True");
+                        let c = b+1;
+                        var d =  c.toString();
+                        var ids = ("1." + d);
+                        var idsMessage = ("11." + d);
+                        console.log(ids);
+                        document.getElementById(ids).style.backgroundColor = "#89baff";
+                        document.getElementById(idsMessage).style.display = "inline";
+                        element = document.getElementsByClassName(ids);
+                        for (var i = 0; i < element.length; i ++) {
+                            element[i].style.visibility = 'hidden';
+                        }
+                        console.log(element);
+                    } 
+                }
+                return unitData, emailData, data;
+            },
+            error: function(xhr) {
+            console.log(xhr);
+            }
+        });
+    }
+}
 var unitData, emailData, data;
 
 $.ajax({
@@ -23,7 +72,7 @@ $.ajax({
             }
             
         }
-        for(var b = 0; b<10; b++){
+        for(var b = 0; b<12; b++){
             if(unitArr[b] == 1){
                 console.log("True");
                 let c = b+1;
@@ -31,7 +80,7 @@ $.ajax({
                 var ids = ("1." + d);
                 var idsMessage = ("11." + d);
                 console.log(ids);
-                document.getElementById(ids).style.backgroundColor = "#4b96ff";
+                document.getElementById(ids).style.backgroundColor = "#89baff";
                 document.getElementById(idsMessage).style.display = "inline";
                 element = document.getElementsByClassName(ids);
                 for (var i = 0; i < element.length; i ++) {

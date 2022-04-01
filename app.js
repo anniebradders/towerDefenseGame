@@ -36,6 +36,10 @@ app.get('/game.html', passport.authenticate('jwt', { session : false }), functio
   res.sendFile(__dirname + '/public/game.html');
 });
 
+app.get('/gameouter.html', passport.authenticate('jwt', { session : false }), function (req, res) {
+  res.sendFile(__dirname + '/public/gameouter.html');
+});
+
 app.get('/menu.html', passport.authenticate('jwt', { session : false }), function (req, res) {
   res.sendFile(__dirname + '/public/menu.html');
 });

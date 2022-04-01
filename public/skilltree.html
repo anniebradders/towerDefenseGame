@@ -3,9 +3,9 @@
 <html>
   <head>
     
-<title>Main Menu</title>
+<title>Skill Tree</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.95">
+<meta name="viewport" content="width=device-width, initial-scale=0.9">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="asset/bootstrap/dist/css/bootstrap.min.css" />
@@ -18,180 +18,191 @@
 <link rel="stylesheet" href="asset/css/main.css">
 </head>
 <body class="text-center" style="background-color: #edf5ff">
+    
     <div class="container">
-
-        <div class="row" >
-            <div class="col-2" >
-                 <a href="menu.html"><div class="boxed">Back To Menu</div></a>
-                 
-             
-                 
-             </div>
-             <div class="col-6" >
-                 <div class="row">
-                 <p class="headline">Your IBM Skill tree</p>
-                 </div>
-                 <div class="row">
-                     
-                     <p id="demo"> Welcome: </p>
-                     <p>Click on a Module to start learning and upgrade your army!</p>
-                     <p id="errmsg"></p>
-                 </div>
-             </div>
-             <div class="col-4">
-                 <img src="/asset/files/logo.png"  width="100%">
-             </div>
-         </div>    
+<div class="row" >
+    <div class="col-2" >
+            <a href="menu.html"><div class="boxed">Back To Menu</div></a>
+            
+        
+            
+    </div>
+    <div class="col-6" >
+            <div class="row">
+            <p class="headline">Your IBM Skill tree</p>
+            </div>
+            <div class="row">
+                
+                <p id="demo"> Welcome: </p>
+                <p>Click on a Module to start learning and upgrade your army!</p>
+                <p id="errmsg"></p>
+            </div>
+    </div>
+    <div class="col-4">
+            <img src="/asset/files/logo.png"  width="100%">
+    </div>
+</div>    
 <div class="row">
     <div class="col-45">
-        <div class="skillbox" ><h4>Branch 1- IBM cloud </h4><br>
+      
+        <div class="skillbox" ><h4>Branch 1- IBM cloud </h4>
             Using your aquired knowledge of all things cloud
              computing, you can improve the ability of your 
              airbourne divisions. 
-            
-            </div>
-
+             <h5>Available units in this branch:</h5>
+             <div><image class="mini" src="\assets\attack\Aerial.png">Aerial: Immune to ground attacks</image></div>
+             <div><image class="mini" src="\assets\attack\Tank.png"></image>Tank: Indefatigable</div>  
+              <div><image class="mini" src="\assets\attack\Robot.png"></image>Robot: Devoid of humanity's weaknesses </div>
+        </div>
+       
     </div>
     
     <div class="col-15" >
             <div class="skillbox1" id="1.1" >
-            <a href="https://www.ibm.com/academic/badges/getting-started-with-cloud-for-the-enterprise"><h4 >Level 1</h4></a>
-            <p >Getting Started with cloud- <br>Unlocks aerial Unit</p>
-            <p id="11.1" id="bottom" style="display: none"> UNLOCKED</p>
-            <div class="1.1" id="bottom">
+            <a href="https://keyskill-clms.comprehend.ibm.com/course/view.php?id=233"><h4 >Level 1</h4></a>
+            <p>Getting Started with Cloud for the Enterprise
+                <br> -Unlocks MachineGun</p>
+        
+            
+            <div class="1.1" class="bottom">
             <label  for="unlock">Unlock Link</label>
             <input class="form-control"   id="1" placeholder="LinkedIn Link" required>
             <h3  class="form-control" ><a  class="btn btn-sm btn-primary btn-block"  onClick="unlock(1)">Unlock</a></h3>
             </div>
+            <p id="11.1" class="bottom" style="display: none"><image src="\assets\attack\Aerial.png"></image> UNLOCKED</p>
         </div>
     </div> 
     <div class="col-15" >
             <div class="skillbox1" id="1.2" >
-            <a href="https://www.ibm.com/academic/badges/journey-to-cloud-envisioning-your-solution"><h4 >Level 2</h4></a>
-            <p>Envisioning Your Solution- <br>Unlocks flamethrower</p>
-            <p id="11.2" id="bottom" style="display: none"> UNLOCKED</p>
-            <div class="1.2" id="bottom" >
+            <a href="https://keyskill-clms.comprehend.ibm.com/course/view.php?id=347"><h4 >Level 2</h4></a>
+            <p>Envisioning Your Solution <br>-Unlocks tank unit</p>
+            
+            <div class="1.2" class="bottom" >
             <label for="unlock">Unlock Link</label>
             <input id="2" class="form-control" placeholder="LinkedIn Link" required>
             <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(2)">Unlock</a></h3>
             </div>
+            <p id="11.2" class="bottom" style="display: none"> <image src="\assets\attack\Tank.png"></image>UNLOCKED</p>
         </div>
     </div> 
     <div class="col-15" >
             <div class="skillbox1" id="1.3">
-            <a href="https://www.ibm.com/academic/badges/improving-healthcare-the-role-of-cloud-computing"><h4 >Level 3</h4></a>
-            <p>Improving Healthcare: The Role of Cloud Computing-<br> unlocks blahblah</p>
-            <p id="11.3" id="bottom" style="display: none"> UNLOCKED</p>
-            <div class="1.3" id="bottom" >
+            <a href="https://keyskill-clms.comprehend.ibm.com/mod/tincanlaunch/view.php?id=3959"><h4 >Level 3</h4></a>
+            <p>Improving Healthcare: The Role of Cloud Computing-<br> -Unlocks robot unit</p>
+            
+            <div class="1.3" class="bottom" >
             <label for="unlock">Unlock Link</label>
             <input id="3" class="form-control" placeholder="LinkedIn Link" required>
             <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(3)">Unlock</a></h3>
             </div>
+            <p id="11.3" class="bottom" style="display: none"><image src="\assets\attack\Robot.png"></image> UNLOCKED</p>
         </div>
     </div> 
-        <div class="col-3" >
-            <p>                          </p>
-        </div>
+        
        
 
 </div>
 <div class="row">
     <div class="col-45">
-        <div class="skillbox" ><h4>Branch 2- Capstone</h4><br>
-            Starting on a new capstone project, culminating project, or senior exhibition. Check out this collection of resources that will get you started on modern enterprise design and development. </div>
-    </div>
+        <div class="skillbox" ><h4>Branch 2- Capstone</h4>
+            Starting on a new capstone project, culminating project, or senior exhibition. Check out this collection
+             of resources that will get you started on modern enterprise design and development. 
+             <h5>Available units in this branch:</h5>
+             <div><image class="mini" src="\assets\attack\Hacker.png">Hacker: Knows all your secrets</image></div>
+             <div><image class="mini" src="\assets\defense\Artillery.png"></image>Artillery: fear it fear it</div>  
+              <div><image class="mini" src="\assets\defense\FlameThrower.png"></image>FlameThrower: Fried Circuits </div>
+            </div>
+            
+        </div>
+
     
     <div class="col-15" >
             <div class="skillbox1" id="1.4" >
-            <a href="https://www.ibm.com/academic/badges/getting-started-with-cloud-for-the-enterprise"><h4 >Level 1</h4></a>
-            <p >Getting Started with Enterprise-grade AI <br>unlocks blahblah</p>
-            <p id="11.4" id="bottom" style="display: none"> UNLOCKED</p>
-            <div class="1.4" id="bottom" >
+            <a href="https://keyskill-clms.comprehend.ibm.com/course/view.php?id=236"><h4 >Level 1</h4></a>
+            <p >Getting Started with Enterprise-grade AI <br>-Unlocks hacker unit</p>
+            <div class="1.4" class="bottom" >
             <label for="unlock">Unlock Link</label>
             <input id="4" class="form-control" placeholder="LinkedIn Link" required>
             <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(4)">Unlock</a></h3>
             </div>
+            <p id="11.4" class="bottom" style="display: none"><image src="\assets\attack\Hacker.png"></image> UNLOCKED</p>
+
         </div>
     </div> 
     <div class="col-15" >
             <div class="skillbox1" id="1.5" >
-            <a href="https://www.ibm.com/academic/badges/journey-to-cloud-envisioning-your-solution"><h4 >Level 2</h4></a>
-            <p>Getting Started with Enterprise Data Science-  <br>unlocks blahblah</p>
-            <p id="11.5" id="bottom" style="display: none"> UNLOCKED</p>
-            <div id="bottom" class="1.5">
+            <a href="https://keyskill-clms.comprehend.ibm.com/course/view.php?id=237"><h4 >Level 2</h4></a>
+            <p>Getting Started with Enterprise Data Science  <br> -Unlocks Artillery</p>
+            <div class="1.5" class="bottom" >
             <label for="unlock">Unlock Link</label>
             <input id="5" class="form-control" placeholder="LinkedIn Link" required>
             <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(5)">Unlock</a></h3>
             </div>
+            <p id="11.5" class="bottom" style="display: none"> <image src="\assets\defense\Artillery.png"></image>UNLOCKED</p>
+
         </div>
     </div> 
     <div class="col-15"  >
             <div class="skillbox1" id="1.6">
-            <a href="https://www.ibm.com/academic/badges/improving-healthcare-the-role-of-cloud-computing"><h4 >Level 3</h4></a>
-            <p>Getting Started with Threat Intelligence and Hunting <br>- unlocks blahblah</p>
-            <p id="11.6" id="bottom" style="display: none"> UNLOCKED</p>
-            <div id="bottom" class="1.6">
+            <a href="https://keyskill-clms.comprehend.ibm.com/course/view.php?id=214"><h4 >Level 3</h4></a>
+            <p>Getting Started with Threat Intelligence and Hunting <br>- Unlocks flamethrower</p>
+            <div class="1.6" class="bottom" >
             <label for="unlock">Unlock Link</label>
             <input id="6" class="form-control" placeholder="LinkedIn Link" required>
             <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(6)">Unlock</a></h3>
             </div>
+            <p id="11.6" class="bottom" style="display: none"><image src="\assets\defense\FlameThrower.png"></image> UNLOCKED</p>
+
         </div>
     </div>
-    <div class="col-15" >
-            <div class="skillbox1" id="1.7">
-            <a href="https://www.ibm.com/academic/badges/improving-healthcare-the-role-of-cloud-computing"><h4 >Level 4</h4></a>
-            <p>Getting Started with Cloud for the Enterprise
-                <br> - unlocks blahblah</p>
-                <p id="11.7" id="bottom" style="display: none"> UNLOCKED</p>
-            <div id="bottom" class="1.7">
-            <label for="unlock">Unlock Link</label>
-            <input id="7" class="form-control" placeholder="LinkedIn Link" required>
-            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(7)">Unlock</a></h3>
-            </div>
-        </div>
-    </div> 
-       
+    </div>
 
-</div>
 <div class="row">
     <div class="col-45">
-        <div class="skillbox" ><h4>Branch 3- Artificial Intelligence </h4><br>
-            Leverage technologies like IBM Watson that uses natural language processing and machine learning to reveal insights from large amounts of unstructured data.. </div>
+        <div class="skillbox" ><h4>Branch 3- Artificial Intelligence </h4>
+            Leverage technologies like IBM Watson that uses natural language processing 
+            and machine learning to reveal insights from large amounts of unstructured data.. 
+            <h5>Available units in this branch:</h5>
+             <div><image class="mini" src="\assets\attack\Redhat.png">Redhat: Her thoughts are beyond comprehesion</image></div>
+             <div><image class="mini" src="\assets\attack\lion.png"></image>Morale Boost: Coffee and an oil change for all units</div>  
+             </div>
+             
     </div>
+    <div class="col-15">
+    <div class="skillbox1" id="1.7">
+                
+        <a href="https://keyskill-clms.comprehend.ibm.com/mod/tincanlaunch/view.php?id=3958""><h4 >Level 4</h4></a>
+        <p>Improving Healthcare: The Role of Artificial Intelligence
+            <br> - Unlocks Redhat</p>
+        <div class="1.7" class="bottom" >
+        <label for="unlock">Unlock Link</label>
+        <input id="7" class="form-control" placeholder="LinkedIn Link" required>
+        <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(7)">Unlock</a></h3>
+        </div>
+        <p id="11.7" class="bottom" style="display: none"><image src="\assets\attack\RedHat.png"></image> UNLOCKED</p>
+
+    </div>
+</div> 
     
     <div class="col-15" >
             <div class="skillbox1" id="1.8" >
-            <a href="https://www.ibm.com/academic/badges/getting-started-with-cloud-for-the-enterprise"><h4 >Level 1</h4></a>
-            <p >Getting Started with Enterprise-grade AI- <br>Unlocks Unit</p>
-            <p id="11.8" id="bottom" style="display: none"> UNLOCKED</p>
-            <div  id="bottom" class="1.8">
-                <form>
+            <a href="https://www.ibm.com/training/artificial-intelligence"><h4 >Level 1</h4></a>
+            <p >IBM Training - Artifical Intelligence<br>- Unlocks lion</p>
+            <div class="1.8" class="bottom" >
             <label for="unlock">Unlock Link</label>
             <input id="8" class="form-control" placeholder="LinkedIn Link" required>
             <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(8)">Unlock</a></h3>
-        </form>
-            </div>
-        </div>
-    </div> 
-    <div class="col-15" >
-            <div class="skillbox1" id="1.9" >
-            <a href="https://www.ibm.com/academic/badges/journey-to-cloud-envisioning-your-solution"><h4 >Level 2</h4></a>
-            <p>Improving Healthcare: The Role of Artificial Intelligence<br> - unlocks blahblah</p>
-            <p id="11.9" id="bottom" style="display: none"> UNLOCKED</p>
-            <div  id="bottom" class="1.9">
-            <form>
-            <label for="unlock">Unlock Link</label>
-            <input id="9" class="form-control" placeholder="LinkedIn Link" required>
-            <h3><a  class="btn btn-sm btn-primary btn-block" onClick="unlock(9)">Unlock</a></h3>
-            </form>
-            </div>
-        </div>
-    </div> 
-        <div class="col-45" >
-            <p>                          </p>
-        </div>
        
+            </div>
+            <p id="11.8" class="bottom" style="display: none"> <image src="\assets\attack\lion.png"></image>UNLOCKED</p>
 
-</div>
-    </div></body>
+        </div>
+    </div> 
+    </div>
+       
+       
+>
+    </div>
+
+</body>
     
