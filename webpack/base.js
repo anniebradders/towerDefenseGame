@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  devtool: "eval-source-map",
+  devtool: false,
   module: {
     rules: [
       {
@@ -34,7 +34,7 @@ module.exports = {
       WEBGL_RENDERER: JSON.stringify(true)
     }),
     new HtmlWebpackPlugin({
-      template: "./index.html"
+      template: "./game.html"
     })
   ]
 };
