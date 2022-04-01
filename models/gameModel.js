@@ -5,6 +5,7 @@ const gameSchema = new Schema({
     type : String,
     required : true,
   },
+  //map array object, used for determining the location of defensive turrets in the game scene
   map : {
     type : Array,
     required : true,
@@ -18,6 +19,12 @@ const gameSchema = new Schema({
         [ 0, 0, 0, 0, 0, 0, 0,0, 0, 0],
         [ 0, 0, 0, 0, 0, 0, 0,0, 0, 0]
        ]
+  },
+  //array where LinkedIn links that are submitted as evidence of completion can be stored for later duplication checking
+  //- as of yet there is no true verification of the contents of the linkedin list, this would likely require a manual step to achieve
+  links: {
+    type: Array,
+    required: false
   },
   no_wins : {
     type: Number,
@@ -34,57 +41,12 @@ const gameSchema = new Schema({
       required: true,
       default: 0
   },
+  //stores a record of which in game units the given user has unlocked by submitting badges
   units : {
     type : Array,
     required : true,
     default: 
         [ 0,0, 0, 0, 0, 0, 0, 0, 0],
-  },
-
-  unit1 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit2 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit3 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit4 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit5 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit6 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit7 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit8 : {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  unit9 : {
-    type: Number,
-    required: true,
-    default: 0
   }
 });
 

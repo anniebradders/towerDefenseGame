@@ -211,9 +211,7 @@ h5{
   padding-left: 5px;
   margin-right: 200px;
 }
-.skillbox1:hover {
-  background-color: #89baff;
-}
+
 .skillbox {
   text-align: left;
   background-color: none;
@@ -252,6 +250,9 @@ h5{
   word-wrap: break-word;
   transition: height 0.5s,background-color 0.5s ease;
 }
+.skillbox1:hover {
+  background-color: #89baff;
+}
 
 .logo {
   margin-top: 200px;
@@ -272,6 +273,7 @@ h5{
   bottom:0;                 
                       
 }
+/* for displaying the mini icon versions of the game unit pixel art */
 .mini{
   align-items:left;
   height:32px;
