@@ -29,14 +29,14 @@ router.post('/submitbadge', async (req, res) => {
   //grabs data from badge submission request
   var data = JSON.parse(req.body.data);
   var user = data.user;
-  console.log("user" + user);
+ 
   // value is the linkedin link
   var value = data.value;
   //key is the units array key
   var key = data.key;
   //units is the units array
   var units = data.units;
-  console.log("unitspre" + units[key]);
+ 
   //string version of link
   var valtest = JSON.stringify(value);
   //checks that the submitted link is a linkedin post 
