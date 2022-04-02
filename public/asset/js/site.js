@@ -1,8 +1,9 @@
 
-
 window.onload = function() {
     menu();
+          // fetches current player's email 
     function menu() {
+
     em = getCookie('email')
       function getCookie(cname) {
       var name = cname + "=";
@@ -21,30 +22,34 @@ window.onload = function() {
     
    
 }
+// fetches player data 
 function httpGet(theUrl)
 {
+  // get request
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.open( "GET", theUrl, false ); 
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
+// gs is game data
     gs = httpGet("/getGame");
+// ts is player data
     ts = httpGet("/GETGET");
-console.log(ts)
-console.log(gs)
+    //grabs specific player's data (without password)
 var currentPlayer = JSON.parse(ts).filter(function (entry) {
     return entry.email === em;
 });
-var curpl = JSON.parse(gs).filter(function(entrys){
-  return entrys.email === em;
+//grabs specific players game data
+var curpl = JSON.parse(gs).filter(function(entr){
+  return entr.email === em;
 });
-currentPlayer[0].password = "";
+// adds player name to welcome message
 document.getElementById("demo").insertAdjacentHTML("beforeend",(currentPlayer[0].name));
-
+// adds high score and win count to page
 document.getElementById("do").insertAdjacentHTML("beforeend",(curpl[0].high_score));
 document.getElementById("win").insertAdjacentHTML("beforeend",(curpl[0].no_wins));
 
-
+// fetches some fun motivational quotes
 fetch("https://type.fit/api/quotes")
   .then(function(response) {
     return response.json();
@@ -57,6 +62,7 @@ fetch("https://type.fit/api/quotes")
   
  
 }}
+// calls the login function
 function signIn() {
   var data = {
     email: document.forms[0].elements[0].value,
@@ -75,7 +81,7 @@ function signIn() {
   });
 
 }
-
+// calls logout
 function logout(){
   $.ajax({
     type: 'POST',
@@ -87,7 +93,7 @@ function logout(){
     }
   });
 }
-
+// calls signup
 function signUp() {
   var data = {
     email: document.forms[0].elements[0].value,

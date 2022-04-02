@@ -11,7 +11,7 @@ export default class Turret extends Phaser.GameObjects.Image{
         this.hp = 0;
         //targetting both ground and flying units
         this.targetting = 0;
-
+       
         //add turret to game
         this.scene.add.existing(this);
         this.setScale(1.2);

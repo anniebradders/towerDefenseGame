@@ -20,7 +20,7 @@ var rand = 0;
 var counter = 0;
 
 let mapData, data, unlockData;
-let check = false;
+let check = true;
 
 $.ajax({
     type: 'GET',

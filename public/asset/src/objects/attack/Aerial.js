@@ -12,7 +12,7 @@ export default class Robot extends Phaser.GameObjects.Image{
         this.enemySpeed = 0;
         this.flying = true;
         this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
-
+        this.flipX = true;
 
         //add enemy to scene
         this.scene.add.existing(this);

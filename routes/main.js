@@ -15,7 +15,7 @@ router.get('/status', (req, res, next) => {
 router.post('/signup', passport.authenticate('signup', { session: false }), async (req, res, next) => {
   res.status(200).json({ message: 'signup successful' });
 });
-
+// creates new game model document for user on signup
 router.post('/signup', function (req, res, next) {
   var posts = new gameModel({
     email : req.data.email
@@ -26,13 +26,35 @@ router.post('/signup', function (req, res, next) {
   })
 })
 router.post('/submitbadge', async (req, res) => {
+  //grabs data from badge submission request
   var data = JSON.parse(req.body.data);
   var user = data.user;
   console.log("user" + user);
+  // value is the linkedin link
+  var value = data.value;
+  //key is the units array key
+  var key = data.key;
+  //units is the units array
   var units = data.units;
-  console.log("units" + units);
+  console.log("unitspre" + units[key]);
+  //string version of link
+  var valtest = JSON.stringify(value);
+  //checks that the submitted link is a linkedin post 
+  //- as of yet there is no true verification of the contents of the page reached from the linkedin link, 
+  //this could potentially be achieved using the Linkedin API, which would require Oauth2.
+  if(valtest.includes("https://www.linkedin.com/feed/update") == true ){
+    units[key] = 1;
+    res.status(200).json({ message: 'Successful upload' });
+  }
+  else{units[key] = 0;
+    res.status(200).json({ message: 'invalid link' });
+  }
+
+  //updates units array
   await gameModel.updateOne({ email: user }, { units : units});
-  res.status(200).json({ message: 'saved successfully' });
+  //adds linkedin link to documents
+  await gameModel.updateOne({ email: user }, {'$push': {'links':  value}});
+
 });
 
 router.post('/login', async (req, res, next) => {
@@ -52,7 +74,6 @@ router.post('/login', async (req, res, next) => {
         const refreshToken = jwt.sign({ user: body }, 'top_secret_refresh', { expiresIn: 86400 });
         // store tokens in cookie
         res.cookie('email', body.email)
-        console.log(user.email)
         res.cookie('jwt', token);
         res.cookie('refreshJwt', refreshToken);
         // store tokens in memory
@@ -71,20 +92,9 @@ router.post('/login', async (req, res, next) => {
   })(req, res, next);
 });
 
-/*router.get('/userdetails', (req, res) => {
-  const { email } = req.body;
-
-  const userdetails = {email};
-
-  res.status(200).json({userdetails});
-
-});*/
-
 
 router.post('/token', (req, res) => {
-  //console.log(req.body);
   const { email, refreshToken } = req.body;
-  //console.log(tokenList);
   if ((refreshToken in tokenList) && (tokenList[refreshToken].email === email)) {
     const body = { email, _id: tokenList[refreshToken]._id };
     const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
@@ -102,6 +112,7 @@ router.post('/logout', (req, res) => {
   if (req.cookies) {
     const refreshToken = req.cookies['refreshJwt'];
     if (refreshToken in tokenList) delete tokenList[refreshToken]
+    //cleares cookies
     res.clearCookie('refreshJwt');
     res.clearCookie('jwt');
     res.clearCookie('email');
@@ -109,12 +120,14 @@ router.post('/logout', (req, res) => {
   res.status(200).json({ message: 'logged out' });
 });
 module.exports = router;
+// gets user data from database and sends it to frontend
 router.route("/GETGET").get(function(req, res) {
-  userModel.find({}, function(err, result) {
+  userModel.find({}, function(err, result) 
+  {
+      // removes all passwords from data before passing it to the client-side
     for (var i=0; i<result.length; i++) {
       result[i].password = "nicetryhackerman";
   }
-  console.log(result)
     if (err) {
       res.send(err);
     } else {
@@ -123,16 +136,14 @@ router.route("/GETGET").get(function(req, res) {
   });
 });
 module.exports = router;
-
+// takes updated map data from phaser and saves it to database
 router.post('/saveGame', async (req, res) => {
-  console.log(req.body);
   const { email, mapLoad } = req.body;
   const mapData = JSON.parse(mapLoad);
-  console.log(mapData);
   await gameModel.updateOne({ email }, { map: mapData });
   res.status(200).json({ message: 'saved successfully' });
 });
-
+//gets game data from data and serves it to phaser and the skilltree page
 router.route("/getGame").get(function(req, res) {
   gameModel.find({}, function(err, result) {
     if (err) {
