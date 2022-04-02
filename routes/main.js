@@ -49,9 +49,7 @@ router.post('/submitbadge', async (req, res) => {
   else{units[key] = 0;
     res.status(200).json({ message: 'invalid link' });
   }
-  console.log(value);
 
-  console.log("unitsafter" + units[key]);
   //updates units array
   await gameModel.updateOne({ email: user }, { units : units});
   //adds linkedin link to documents
@@ -76,7 +74,6 @@ router.post('/login', async (req, res, next) => {
         const refreshToken = jwt.sign({ user: body }, 'top_secret_refresh', { expiresIn: 86400 });
         // store tokens in cookie
         res.cookie('email', body.email)
-        console.log(user.email)
         res.cookie('jwt', token);
         res.cookie('refreshJwt', refreshToken);
         // store tokens in memory
@@ -97,9 +94,7 @@ router.post('/login', async (req, res, next) => {
 
 
 router.post('/token', (req, res) => {
-  //console.log(req.body);
   const { email, refreshToken } = req.body;
-  //console.log(tokenList);
   if ((refreshToken in tokenList) && (tokenList[refreshToken].email === email)) {
     const body = { email, _id: tokenList[refreshToken]._id };
     const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
@@ -133,7 +128,6 @@ router.route("/GETGET").get(function(req, res) {
     for (var i=0; i<result.length; i++) {
       result[i].password = "nicetryhackerman";
   }
-  console.log(result)
     if (err) {
       res.send(err);
     } else {
@@ -144,10 +138,8 @@ router.route("/GETGET").get(function(req, res) {
 module.exports = router;
 // takes updated map data from phaser and saves it to database
 router.post('/saveGame', async (req, res) => {
-  console.log(req.body);
   const { email, mapLoad } = req.body;
   const mapData = JSON.parse(mapLoad);
-  console.log(mapData);
   await gameModel.updateOne({ email }, { map: mapData });
   res.status(200).json({ message: 'saved successfully' });
 });
