@@ -145,11 +145,12 @@ function unlock(linkNo){
                 // reads response from server operation which checks validity of link
                 var response = JSON.stringify(data.message);
                 console.log("post response data" + response);
-                if (response.contains('Invalid')){
-                    document.getElementById("errmsg").innerHTML = "Link is invalid"
-                }
                 
+                if (response.contains('Invalid')){
+                    document.getElementById("errmsg").innerHTML = "Link is invalid";
+                }
                 setTimeout(() => {location.reload(); }, 1000);
+                
                 
                 
             },
